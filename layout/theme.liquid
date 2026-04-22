@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+  <head>
+    {% # Inlined CSS Variables %}
+    {% render 'css-variables' %}
+
+    {% # Load and preload the critical CSS %}
+    {{ 'critical.css' | asset_url | stylesheet_tag: preload: true }}
+
+    {% # Social, title, etc. %}
+    {% render 'meta-tags' %}
+
+    <title>
+  {%- if page.title != blank -%}
+    {{ page.title | escape }} | {{ shop.name | escape }}
+  {%- else -%}
+    VizionOne Professional Hand Cleaner | Tough On Dirt. Gentle On Hands.
+  {%- endif -%}
+</title>
+
+<meta name="description" content="VizionOne Professional Hand Cleaner — Industrial strength, gentle on skin. Built for mechanics, detailers, racers, and tradesmen. Handcrafted in Greater Houston, TX.">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="{{ page.title | default: 'VizionOne Professional Hand Cleaner' | escape }}">
+<meta property="og:description" content="Industrial strength hand cleaner built for real work. Tough on dirt. Gentle on hands. Made in Greater Houston, TX.">
+<meta property="og:url" content="{{ canonical_url }}">
+<meta property="og:site_name" content="{{ shop.name | escape }}">
+{%- if settings.share_image -%}
+  <meta property="og:image" content="{{ settings.share_image | image_url: width: 1200 }}">
+{%- endif -%}
+
+{% comment %} ── Google Fonts (remove if theme already loads these) ── {% endcomment %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;500;600;700&family=Oswald:wght@400;500;600;700&display=swap">
+
+{% comment %} ── Landing page stylesheet ── {% endcomment %}
+{{ 'landing.css' | asset_url | stylesheet_tag }}
+
+    {{ content_for_header }}
+  </head>
+
+  <body>
+      {% section 'announcement-bar' %}
+      {% section 'landing-header' %}
+
+<main id="main-content" role="main">
+    {{ content_for_layout }}
+</main>
+  {% render 'landing-cart-drawer' %}
+  {% section 'landing-footer' %}
+  <div
+    class="sticky-buy-bar"
+    id="stickyBuyBar"
+    role="region"
+    aria-label="Quick buy"
+    aria-hidden="true"
+  >
+    <span class="sticky-buy-bar__name">VizionOne Hand Cleaner</span>
+    <a href="#pricing" class="btn btn--red sticky-buy-bar__cta" aria-label="Order VizionOne now">ORDER NOW</a>
+  </div>
+
+
+    
+{% comment %} ── JS: deferred so it never blocks render ── {% endcomment %}
+<script src="{{ 'landing.js' | asset_url }}" defer></script>
+  </body>
+</html>

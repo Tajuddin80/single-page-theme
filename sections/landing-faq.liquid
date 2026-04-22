@@ -1,0 +1,132 @@
+{% comment %}
+  sections/landing-faq.liquid
+  Accordion FAQ. Kills final objections before the last CTA.
+  id="faq" — anchor target for nav link.
+  Accordion behavior driven by landing.js.
+  Schema blocks: fully editable Q&A pairs.
+{% endcomment %}
+
+<section class="section-faq" id="faq" aria-label="Frequently asked questions">
+  <div class="container container--narrow">
+
+    <h2 class="section-title">
+      {{ section.settings.headline | default: 'FREQUENTLY ASKED QUESTIONS' }}
+    </h2>
+
+    <div class="faq-list">
+      {% for block in section.blocks %}
+        <div class="faq-item" {{ block.shopify_attributes }}>
+          <button
+            class="faq-question"
+            aria-expanded="false"
+            aria-controls="faq-answer-{{ forloop.index }}"
+            id="faq-question-{{ forloop.index }}"
+          >
+            <span>{{ block.settings.question }}</span>
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div
+            class="faq-answer"
+            id="faq-answer-{{ forloop.index }}"
+            role="region"
+            aria-labelledby="faq-question-{{ forloop.index }}"
+            hidden
+          >
+            <p>{{ block.settings.answer }}</p>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "FAQ",
+  "settings": [
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline",
+      "default": "FREQUENTLY ASKED QUESTIONS"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq_item",
+      "name": "FAQ Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "Is this safe for repeated daily use?"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer",
+          "default": "Yes. VizionOne is specifically formulated for professionals who wash multiple times per day."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ",
+      "blocks": [
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Is this safe for repeated daily use?",
+            "answer": "Yes. VizionOne is specifically formulated for professionals who wash their hands multiple times per day. The skin conditioners in every batch offset the cleaning agents so your hands don't dry out or crack over time."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "What's the difference between the 16 oz and 32 oz?",
+            "answer": "Size only. Same formula. The 32 oz is the best value for daily shop use. The 16 oz is great for personal kits, trying it out for the first time, or throwing in a bag."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "What does the Gallon option come as?",
+            "answer": "A single 128oz jug — ideal for shops that want to run a refill station or handle high-volume daily use across a team."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Does it actually remove grease and oil completely?",
+            "answer": "Yes. It's built for it. Grease, motor oil, polishing compounds, silicone residue, grime — one wash. That's what it was designed for."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "How is this different from Gojo or Fast Orange?",
+            "answer": "Those are mass-produced commodity formulas made in factories for mass retail. VizionOne is handcrafted in small batches with natural ingredients by people who work in shops. More intentional, more skin-conscious, and built for repeated professional use."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Where does VizionOne ship from?",
+            "answer": "Greater Houston, TX. Ships nationwide to all 50 states via standard carriers."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "How long does a 32 oz last one person?",
+            "answer": "For a single person using it daily in a shop environment, a 32 oz typically lasts 4 to 6 weeks. Heavy users may go through it faster."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

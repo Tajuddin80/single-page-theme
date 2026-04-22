@@ -1,0 +1,96 @@
+{% comment %}
+  sections/landing-how-it-works.liquid
+  3-step process section. Reduces hesitation by making usage simple.
+  Steps editable via schema blocks.
+{% endcomment %}
+
+<section class="section-how-it-works" aria-label="How to use VizionOne">
+  <div class="container">
+
+    <h2 class="section-title">
+      {{ section.settings.headline | default: 'HOW IT WORKS' }}
+    </h2>
+
+    {% if section.settings.subheadline != blank %}
+      <p class="section-sub">{{ section.settings.subheadline }}</p>
+    {% endif %}
+
+    <div class="steps-grid">
+      {% for block in section.blocks %}
+        <div class="step" {{ block.shopify_attributes }}>
+          <div class="step__number" aria-hidden="true">{{ forloop.index }}</div>
+          <h3 class="step__title">{{ block.settings.title }}</h3>
+          <p class="step__body">{{ block.settings.body }}</p>
+        </div>
+      {% endfor %}
+    </div>
+
+    {% if section.settings.footnote != blank %}
+      <p class="how-it-works__footnote">{{ section.settings.footnote }}</p>
+    {% endif %}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "How It Works",
+  "settings": [
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline",
+      "default": "HOW IT WORKS"
+    },
+    {
+      "type": "text",
+      "id": "subheadline",
+      "label": "Sub-headline"
+    },
+    {
+      "type": "text",
+      "id": "footnote",
+      "label": "Footnote text",
+      "default": "That's it. No complicated routine. Just clean hands."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Step title", "default": "APPLY" },
+        { "type": "textarea", "id": "body", "label": "Step description", "default": "Put a small amount of VizionOne on dry or wet hands. Work it into the grime." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "How It Works",
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "title": "APPLY",
+            "body": "Put a small amount of VizionOne on dry or wet hands. Work it into the grease and grime."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "title": "SCRUB",
+            "body": "The jojoba beads break down grease and lift dirt fast. Work for 20 to 30 seconds."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "title": "RINSE",
+            "body": "Wash off completely. Hands come out clean, fresh, and not dried out."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

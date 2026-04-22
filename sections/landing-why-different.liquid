@@ -1,0 +1,118 @@
+{% comment %}
+  sections/landing-why-different.liquid
+  3-card USP differentiation section.
+  Positions VizionOne vs. mass-market alternatives.
+  Cards are fully editable via schema blocks.
+{% endcomment %}
+
+<section class="section-why-diff" aria-label="Why VizionOne is different">
+  <div class="container">
+
+    <h2 class="section-title">
+      {{ section.settings.headline | default: 'NOT MASS PRODUCED. NOT GENERIC. NOT CLOSE.' }}
+    </h2>
+
+    {% if section.settings.subheadline != blank %}
+      <p class="section-sub">{{ section.settings.subheadline }}</p>
+    {% endif %}
+
+    <div class="diff-cards">
+      {% for block in section.blocks %}
+        <div class="diff-card" {{ block.shopify_attributes }}>
+          {% if block.settings.icon != blank %}
+            <div class="diff-card__icon" aria-hidden="true">{{ block.settings.icon }}</div>
+          {% endif %}
+          <p class="diff-card__label">{{ block.settings.label }}</p>
+          <h3 class="diff-card__title">{{ block.settings.title }}</h3>
+          <p class="diff-card__body">{{ block.settings.body }}</p>
+        </div>
+      {% endfor %}
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Why Different",
+  "settings": [
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Section headline",
+      "default": "NOT MASS PRODUCED. NOT GENERIC. NOT CLOSE."
+    },
+    {
+      "type": "text",
+      "id": "subheadline",
+      "label": "Sub-headline (optional)"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "diff_card",
+      "name": "Differentiator Card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon (emoji)",
+          "default": "⚙"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Red label text",
+          "default": "HANDCRAFTED"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Card title",
+          "default": "SMALL BATCH FORMULA"
+        },
+        {
+          "type": "textarea",
+          "id": "body",
+          "label": "Card body",
+          "default": "Made in small batches from scratch. Not a private-label factory formula. Every bottle is built with intention."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Why Different",
+      "blocks": [
+        {
+          "type": "diff_card",
+          "settings": {
+            "icon": "⚙",
+            "label": "HANDCRAFTED",
+            "title": "SMALL BATCH FORMULA",
+            "body": "Made in small batches from scratch. Not a private-label factory formula. Every bottle is built with intention."
+          }
+        },
+        {
+          "type": "diff_card",
+          "settings": {
+            "icon": "🌿",
+            "label": "NATURAL INGREDIENTS",
+            "title": "JOJOBA. CONDITIONERS. THAT'S IT.",
+            "body": "No unnecessary harsh chemicals. Jojoba beads and natural conditioners built for hands that work every single day."
+          }
+        },
+        {
+          "type": "diff_card",
+          "settings": {
+            "icon": "🔧",
+            "label": "BUILT FOR REAL WORK",
+            "title": "SHOP-GRADE. PERIOD.",
+            "body": "Designed for mechanics, detailers, fabricators, and racers who need serious results — not office hand soap."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,454 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "landing-hero": {
+      "type": "landing-hero",
+      "settings": {
+        "hero_image": "shopify://shop_images/rub-hand_3a4735b5-3028-4725-b489-6291c786f80b.png",
+        "pre_headline": "PROFESSIONAL HAND CLEANER",
+        "headline": "TOUGH ON DIRT.<br>GENTLE ON HANDS.",
+        "subheadline": "Industrial-strength hand cleaner built for real work. Grease, oil, grime — gone. Hands still intact.",
+        "cta_text": "ORDER NOW",
+        "trust_line": "Used in shops, garages & race trailers across America"
+      }
+    },
+    "landing-benefits-strip": {
+      "type": "landing-benefits-strip",
+      "blocks": {
+        "benefit_UbVa6Q": {
+          "type": "benefit",
+          "settings": {
+            "icon": "🛡️",
+            "label": "Industrial Strength",
+            "description": "Removes grease, oil & grime fast"
+          }
+        },
+        "benefit_f6Gj3k": {
+          "type": "benefit",
+          "settings": {
+            "icon": "🤳",
+            "label": "Skin Friendly",
+            "description": "Conditioners keep hands soft"
+          }
+        },
+        "benefit_FEbMRY": {
+          "type": "benefit",
+          "settings": {
+            "icon": "🌿",
+            "label": "Fresh Clean Scent",
+            "description": "Leaves hands refreshed"
+          }
+        },
+        "benefit_UW6H9A": {
+          "type": "benefit",
+          "settings": {
+            "icon": "⚡",
+            "label": "Made in the USA",
+            "description": "Handcrafted in Greater Houston, TX"
+          }
+        }
+      },
+      "block_order": [
+        "benefit_UbVa6Q",
+        "benefit_f6Gj3k",
+        "benefit_FEbMRY",
+        "benefit_UW6H9A"
+      ],
+      "settings": {}
+    },
+    "landing-problem": {
+      "type": "landing-problem",
+      "blocks": {
+        "pain_point_ATkbih": {
+          "type": "pain_point",
+          "settings": {
+            "pain_point": "Grease that won’t fully come off"
+          }
+        },
+        "pain_point_baeXHU": {
+          "type": "pain_point",
+          "settings": {
+            "pain_point": "Skin that feels burned and stripped after washing"
+          }
+        },
+        "pain_point_mmtc7i": {
+          "type": "pain_point",
+          "settings": {
+            "pain_point": "Film and residue left behind after rinsing"
+          }
+        },
+        "pain_point_NVm97f": {
+          "type": "pain_point",
+          "settings": {
+            "pain_point": "Chemical smell that follows you home from the shop"
+          }
+        },
+        "pain_point_7BzaFE": {
+          "type": "pain_point",
+          "settings": {
+            "pain_point": "Cracked, destroyed hands from repeated daily use"
+          }
+        }
+      },
+      "block_order": [
+        "pain_point_ATkbih",
+        "pain_point_baeXHU",
+        "pain_point_mmtc7i",
+        "pain_point_NVm97f",
+        "pain_point_7BzaFE"
+      ],
+      "settings": {
+        "problem_image": "shopify://shop_images/powder.jpg",
+        "image_alt": "Hands holding abrasive material",
+        "headline": "YOU WASH YOUR HANDS 10X A DAY. YOUR CLEANER SHOULDN'T WRECK THEM.",
+        "body": "Cheap hand cleaners strip your skin raw. They leave residue. They smell like a chemical plant. And after a year of daily use, your hands look like sandpaper. You work hard — you deserve a cleaner that works just as hard without destroying your hands."
+      }
+    },
+    "landing-product-intro": {
+      "type": "landing-product-intro",
+      "blocks": {
+        "checklist_item_YedGtM": {
+          "type": "checklist_item",
+          "settings": {
+            "item": "Cuts through grease, oil & polishing compounds"
+          }
+        },
+        "checklist_item_MUPADX": {
+          "type": "checklist_item",
+          "settings": {
+            "item": "Jojoba beads for natural scrubbing action"
+          }
+        },
+        "checklist_item_XX6D8W": {
+          "type": "checklist_item",
+          "settings": {
+            "item": "Skin conditioners built into every batch"
+          }
+        },
+        "checklist_item_hmAByk": {
+          "type": "checklist_item",
+          "settings": {
+            "item": "No harsh chemicals that burn or dry"
+          }
+        },
+        "checklist_item_4mEriD": {
+          "type": "checklist_item",
+          "settings": {
+            "item": "Works on your first wash, every time"
+          }
+        }
+      },
+      "block_order": [
+        "checklist_item_YedGtM",
+        "checklist_item_MUPADX",
+        "checklist_item_XX6D8W",
+        "checklist_item_hmAByk",
+        "checklist_item_4mEriD"
+      ],
+      "settings": {
+        "product_image": "shopify://shop_images/pro-img_and_run-hand_f0f1e299-41dd-4e4f-b3e0-08cdfb9fc3e8.png",
+        "headline": "MEET VIZIONONE. BUILT IN THE SHOP. FOR THE SHOP.",
+        "body": "VizionOne Professional Hand Cleaner was made from scratch — not off a factory shelf — by people who spend their days in a garage. Handcrafted in small batches using natural ingredients and jojoba beads that cut through the worst grime without destroying the skin underneath.",
+        "cta_text": "ORDER YOURS NOW"
+      }
+    },
+    "landing_ingredients_X3THmE": {
+      "type": "landing-ingredients",
+      "blocks": {
+        "ingredient_card_qD3en4": {
+          "type": "ingredient_card",
+          "settings": {
+            "title": "JOJOBA BEADS",
+            "body": "Natural scrubbing action. Biodegradable. Safe for daily professional use."
+          }
+        },
+        "ingredient_card_j6hWGi": {
+          "type": "ingredient_card",
+          "settings": {
+            "title": "SKIN CONDITIONERS",
+            "body": "Built into every batch to maintain moisture after repeated washing."
+          }
+        },
+        "ingredient_card_wHU8pN": {
+          "type": "ingredient_card",
+          "settings": {
+            "title": "NO HARSH CHEMICALS",
+            "body": "Formulated without the aggressive agents that strip and burn skin."
+          }
+        },
+        "ingredient_card_ahcHUP": {
+          "type": "ingredient_card",
+          "settings": {
+            "title": "SMALL BATCH MADE",
+            "body": "Not a factory formula. Made intentionally in Greater Houston, TX."
+          }
+        }
+      },
+      "block_order": [
+        "ingredient_card_qD3en4",
+        "ingredient_card_j6hWGi",
+        "ingredient_card_wHU8pN",
+        "ingredient_card_ahcHUP"
+      ],
+      "name": "Landing Ingredients",
+      "settings": {
+        "section_image": "shopify://shop_images/IMG_2301.heic",
+        "image_alt": "Natural ingredients inside VizionOne hand cleaner",
+        "eyebrow": "NATURAL INGREDIENTS",
+        "headline": "REAL INGREDIENTS. REAL RESULTS.",
+        "body": "Every batch of VizionOne is built with natural jojoba beads, nature's perfect scrubbing agent. Unlike synthetic abrasives or harsh pumice, jojoba beads are biodegradable, skin-safe, and perfectly sized to lift embedded grime without tearing at your skin."
+      }
+    },
+    "landing-pricing": {
+      "type": "landing-pricing",
+      "settings": {
+        "product_handle": "vizionone-professional-hand-cleaner",
+        "headline": "CHOOSE YOUR SIZE. ORDER TODAY.",
+        "subheadline": "Tax and shipping calculated at checkout. Ships from Greater Houston, TX.",
+        "helper_text": "Most individuals order the 32 oz. Shops order the Gallon or 12-Pack."
+      }
+    },
+    "landing-why-different": {
+      "type": "landing-why-different",
+      "disabled": true,
+      "settings": {
+        "headline": "NOT MASS PRODUCED. NOT GENERIC. NOT CLOSE.",
+        "subheadline": ""
+      }
+    },
+    "landing-deep-benefits": {
+      "type": "landing-deep-benefits",
+      "disabled": true,
+      "settings": {
+        "headline": "BUILT TO PERFORM. EVERY WASH. EVERY TIME."
+      }
+    },
+    "landing-how-it-works": {
+      "type": "landing-how-it-works",
+      "disabled": true,
+      "settings": {
+        "headline": "HOW IT WORKS",
+        "subheadline": "",
+        "footnote": "That's it. No complicated routine. Just clean hands."
+      }
+    },
+    "landing-who-its-for": {
+      "type": "landing-who-its-for",
+      "disabled": true,
+      "settings": {
+        "headline": "IF YOUR HANDS GET DIRTY, THIS IS FOR YOU",
+        "footnote": "Anyone who does real work with their hands."
+      }
+    },
+    "landing-comparison": {
+      "type": "landing-comparison",
+      "blocks": {
+        "comparison_row_Myb3nM": {
+          "type": "comparison_row",
+          "settings": {
+            "feature": "Handcrafted formula",
+            "v1_yes": true,
+            "competitor_value": "✕ Mass-produced"
+          }
+        },
+        "comparison_row_8qR9LX": {
+          "type": "comparison_row",
+          "settings": {
+            "feature": "Natural ingredients",
+            "v1_yes": true,
+            "competitor_value": "✕ Synthetic filler"
+          }
+        },
+        "comparison_row_N3mdQr": {
+          "type": "comparison_row",
+          "settings": {
+            "feature": "Jojoba bead scrubbing",
+            "v1_yes": true,
+            "competitor_value": "✕ Pumice/synthetic"
+          }
+        },
+        "comparison_row_yxwMmi": {
+          "type": "comparison_row",
+          "settings": {
+            "feature": "Skin conditioners",
+            "v1_yes": true,
+            "competitor_value": "⚠ Minimal"
+          }
+        },
+        "comparison_row_qXGQit": {
+          "type": "comparison_row",
+          "settings": {
+            "feature": "No harsh chemicals",
+            "v1_yes": true,
+            "competitor_value": "✕ Heavy chemical base"
+          }
+        },
+        "comparison_row_C3w3MH": {
+          "type": "comparison_row",
+          "settings": {
+            "feature": "Small batch USA-made",
+            "v1_yes": true,
+            "competitor_value": "✕ Factory produced"
+          }
+        },
+        "comparison_row_NFkaMJ": {
+          "type": "comparison_row",
+          "settings": {
+            "feature": "Built for repeated daily use",
+            "v1_yes": true,
+            "competitor_value": "✕ Not designed for it"
+          }
+        }
+      },
+      "block_order": [
+        "comparison_row_Myb3nM",
+        "comparison_row_8qR9LX",
+        "comparison_row_N3mdQr",
+        "comparison_row_yxwMmi",
+        "comparison_row_qXGQit",
+        "comparison_row_C3w3MH",
+        "comparison_row_NFkaMJ"
+      ],
+      "settings": {
+        "headline": "VIZIONONE VS. THE REST",
+        "competitor_label": "GOJO / FAST ORANGE / ZEP"
+      }
+    },
+    "landing-testimonials": {
+      "type": "landing-testimonials",
+      "blocks": {
+        "testimonial_iqwKkK": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "“I’ve used Gojo for 15 years. VizionOne blew it out of the water. Hands feel clean without feeling like sandpaper. This is my shop’s cleaner now.”",
+            "author": "Mike R. — Lead Mechanic, Houston TX"
+          }
+        },
+        "testimonial_UtMKGn": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "“We run a 6-bay detail shop. Guys love it. Smells great, works hard, doesn’t dry out your hands. Won’t go back.”",
+            "author": "Danny S. — Detail Shop Owner, Spring TX"
+          }
+        },
+        "testimonial_NTbye3": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "“Race weekends mean dirty hands all day. VizionOne handles it and I don’t wake up Sunday with cracked skin. Game changer.”",
+            "author": "Travis K. — Race Crew Chief"
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_iqwKkK",
+        "testimonial_UtMKGn",
+        "testimonial_NTbye3"
+      ],
+      "settings": {
+        "headline": "WHAT THE SHOP SAYS"
+      }
+    },
+    "landing-guarantee": {
+      "type": "landing-guarantee",
+      "settings": {
+        "headline": "100% SATISFACTION. GUARANTEED.",
+        "body": "If VizionOne doesn't clean better than what you're using now, contact us. We'll make it right. No runaround, no forms, no games. Just a straight answer from a real shop brand."
+      }
+    },
+    "landing-faq": {
+      "type": "landing-faq",
+      "blocks": {
+        "faq_item_w3TXqy": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Is this safe for repeated daily use?",
+            "answer": "Yes. VizionOne is specifically formulated for professionals who wash multiple times per day."
+          }
+        },
+        "faq_item_BR49rM": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What’s the difference between 16 oz and 32 oz?",
+            "answer": "The only difference is size and longevity. The 32 oz bottle lasts longer and offers better value for frequent use, while the 16 oz is more compact and convenient for lighter or occasional use."
+          }
+        },
+        "faq_item_N3WtVK": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How is this different from Gojo or Fast Orange?",
+            "answer": "Vizion One focuses on powerful cleaning with a more skin-conscious, all-natural approach. It removes tough grease just as effectively while being gentler on your hands and leaving less residue."
+          }
+        },
+        "faq_item_paxKJE": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Does it really remove grease and oil completely?",
+            "answer": "Yes. It’s specifically formulated to break down and lift heavy grease, oil, and grime, leaving your hands clean without a sticky or oily after-feel."
+          }
+        },
+        "faq_item_ApCbkq": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Where does it ship from?",
+            "answer": "Orders are processed and shipped from our distribution center to ensure fast and reliable delivery. Shipping times may vary depending on your location."
+          }
+        },
+        "faq_item_rKhfbC": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How long does a 32 oz last?",
+            "answer": "It depends on usage, but for regular daily use, a 32 oz bottle typically lasts several weeks to a few months. Heavy-duty users may go through it faster, while occasional users can expect it to last much longer."
+          }
+        }
+      },
+      "block_order": [
+        "faq_item_w3TXqy",
+        "faq_item_BR49rM",
+        "faq_item_N3WtVK",
+        "faq_item_paxKJE",
+        "faq_item_ApCbkq",
+        "faq_item_rKhfbC"
+      ],
+      "settings": {
+        "headline": "FREQUENTLY ASKED QUESTIONS"
+      }
+    },
+    "landing-final-cta": {
+      "type": "landing-final-cta",
+      "settings": {
+        "headline": "CLEAN HANDS.",
+        "headline_red": "BETTER WORK.",
+        "body": "Stop washing your hands with something that wrecks them. Order VizionOne today and feel the difference on your first use.",
+        "cta_text": "ORDER NOW"
+      }
+    }
+  },
+  "order": [
+    "landing-hero",
+    "landing-benefits-strip",
+    "landing-problem",
+    "landing-product-intro",
+    "landing_ingredients_X3THmE",
+    "landing-pricing",
+    "landing-why-different",
+    "landing-deep-benefits",
+    "landing-how-it-works",
+    "landing-who-its-for",
+    "landing-comparison",
+    "landing-testimonials",
+    "landing-guarantee",
+    "landing-faq",
+    "landing-final-cta"
+  ]
+}

@@ -1,0 +1,108 @@
+{% comment %}
+  sections/landing-deep-benefits.liquid
+  6-benefit detailed breakdown below the pricing section.
+  Reinforces the purchase decision with specific proof points.
+  Uses schema blocks — fully editable in customizer.
+{% endcomment %}
+
+<section class="section-deep-benefits" aria-label="Detailed product benefits">
+  <div class="container">
+
+    <h2 class="section-title">
+      {{ section.settings.headline | default: 'BUILT TO PERFORM. EVERY WASH. EVERY TIME.' }}
+    </h2>
+
+    <div class="deep-benefits-grid">
+      {% for block in section.blocks %}
+        <div class="deep-benefit" {{ block.shopify_attributes }}>
+          {% if block.settings.icon != blank %}
+            <div class="deep-benefit__icon" aria-hidden="true">{{ block.settings.icon }}</div>
+          {% endif %}
+          <h3 class="deep-benefit__title">{{ block.settings.title }}</h3>
+          <p class="deep-benefit__body">{{ block.settings.body }}</p>
+        </div>
+      {% endfor %}
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Deep Benefits",
+  "settings": [
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Section headline",
+      "default": "BUILT TO PERFORM. EVERY WASH. EVERY TIME."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "benefit_detail",
+      "name": "Benefit Detail",
+      "settings": [
+        { "type": "text", "id": "icon", "label": "Icon (emoji)", "default": "💪" },
+        { "type": "text", "id": "title", "label": "Title", "default": "CUTS THROUGH GREASE" },
+        { "type": "textarea", "id": "body", "label": "Body", "default": "Formulated to break down petroleum-based grease, motor oil, and shop grime on contact." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Deep Benefits",
+      "blocks": [
+        {
+          "type": "benefit_detail",
+          "settings": {
+            "icon": "💪",
+            "title": "CUTS THROUGH GREASE",
+            "body": "Formulated to break down petroleum-based grease, motor oil, and shop grime on contact. Works fast."
+          }
+        },
+        {
+          "type": "benefit_detail",
+          "settings": {
+            "icon": "🌿",
+            "title": "JOJOBA BEAD SCRUB ACTION",
+            "body": "Natural jojoba beads provide mechanical scrubbing without synthetic abrasives that damage skin."
+          }
+        },
+        {
+          "type": "benefit_detail",
+          "settings": {
+            "icon": "✋",
+            "title": "NO FILM. NO RESIDUE.",
+            "body": "Rinses completely clean. No sticky film left behind on skin or tools after washing."
+          }
+        },
+        {
+          "type": "benefit_detail",
+          "settings": {
+            "icon": "🔄",
+            "title": "REPEATED USE SAFE",
+            "body": "Built for professionals who wash 5 to 10+ times per day. Won't destroy your skin over time."
+          }
+        },
+        {
+          "type": "benefit_detail",
+          "settings": {
+            "icon": "💧",
+            "title": "SKIN CONDITIONERS INCLUDED",
+            "body": "Every batch contains skin-conditioning agents to maintain moisture and overall hand health."
+          }
+        },
+        {
+          "type": "benefit_detail",
+          "settings": {
+            "icon": "🏭",
+            "title": "FRESH WORKSHOP SCENT",
+            "body": "Smells clean and professional after every wash. Not like industrial chemicals."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

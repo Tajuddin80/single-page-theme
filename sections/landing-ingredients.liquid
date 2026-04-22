@@ -1,0 +1,149 @@
+{% comment %}
+  sections/landing-ingredients.liquid
+  Ingredient story section with image, supporting copy, and proof cards.
+  Mirrors the existing landing page pattern with schema-driven content.
+{% endcomment %}
+
+<section class="section-ingredients" aria-label="Natural ingredients">
+  <div class="container section-ingredients__inner">
+
+    <div class="section-ingredients__copy">
+      <p class="label label--red label--spaced">
+        {{ section.settings.eyebrow | default: 'NATURAL INGREDIENTS' }}
+      </p>
+
+      <h2 class="section-title section-title--left">
+        {{ section.settings.headline | default: 'REAL INGREDIENTS. REAL RESULTS.' }}
+      </h2>
+
+      <p class="section-ingredients__body">
+        {{ section.settings.body | default: "Every batch of VizionOne is built with natural jojoba beads, nature's perfect scrubbing agent. Unlike synthetic abrasives or harsh pumice, jojoba beads are biodegradable, skin-safe, and perfectly sized to lift embedded grime without tearing at your skin." }}
+      </p>
+
+      {% if section.blocks.size > 0 %}
+        <div class="ingredients-grid" aria-label="Ingredient highlights">
+          {% for block in section.blocks %}
+            <div class="ingredient-card" {{ block.shopify_attributes }}>
+              <h3 class="ingredient-card__title">{{ block.settings.title }}</h3>
+              <p class="ingredient-card__body">{{ block.settings.body }}</p>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="section-ingredients__media">
+      <div class="section-ingredients__image-frame">
+        {% if section.settings.section_image != blank %}
+          {% assign ingredient_image_alt = section.settings.image_alt | default: 'Natural ingredients inside VizionOne hand cleaner' %}
+          {{
+            section.settings.section_image
+            | image_url: width: 900
+            | image_tag:
+                loading: 'lazy',
+                widths: '400, 600, 900',
+                alt: ingredient_image_alt,
+                class: 'section-ingredients__img'
+          }}
+        {% else %}
+          <div class="image-placeholder section-ingredients__image-placeholder">
+            <p>Upload ingredients image</p>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Landing Ingredients",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "section_image",
+      "label": "Section image"
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Image alt text",
+      "default": "Natural ingredients inside VizionOne hand cleaner"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow label",
+      "default": "NATURAL INGREDIENTS"
+    },
+    {
+      "type": "textarea",
+      "id": "headline",
+      "label": "Headline",
+      "default": "REAL INGREDIENTS. REAL RESULTS."
+    },
+    {
+      "type": "textarea",
+      "id": "body",
+      "label": "Body copy",
+      "default": "Every batch of VizionOne is built with natural jojoba beads, nature's perfect scrubbing agent. Unlike synthetic abrasives or harsh pumice, jojoba beads are biodegradable, skin-safe, and perfectly sized to lift embedded grime without tearing at your skin."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "ingredient_card",
+      "name": "Ingredient Card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Card title",
+          "default": "JOJOBA BEADS"
+        },
+        {
+          "type": "textarea",
+          "id": "body",
+          "label": "Card body",
+          "default": "Natural scrubbing action. Biodegradable. Safe for daily professional use."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Landing Ingredients",
+      "blocks": [
+        {
+          "type": "ingredient_card",
+          "settings": {
+            "title": "JOJOBA BEADS",
+            "body": "Natural scrubbing action. Biodegradable. Safe for daily professional use."
+          }
+        },
+        {
+          "type": "ingredient_card",
+          "settings": {
+            "title": "SKIN CONDITIONERS",
+            "body": "Built into every batch to maintain moisture after repeated washing."
+          }
+        },
+        {
+          "type": "ingredient_card",
+          "settings": {
+            "title": "NO HARSH CHEMICALS",
+            "body": "Formulated without the aggressive agents that strip and burn skin."
+          }
+        },
+        {
+          "type": "ingredient_card",
+          "settings": {
+            "title": "SMALL BATCH MADE",
+            "body": "Not a factory formula. Made intentionally in Greater Houston, TX."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

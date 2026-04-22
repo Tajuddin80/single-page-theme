@@ -1,0 +1,112 @@
+{% comment %}
+  sections/landing-product-intro.liquid
+  Introduces VizionOne as the solution after the problem section.
+  2-column layout: image left, copy + checklist right. Stacks on mobile.
+  Includes a secondary CTA.
+{% endcomment %}
+
+<section class="section-intro" aria-label="Meet VizionOne">
+  <div class="container section-intro__inner">
+
+    <div class="section-intro__image">
+      {% if section.settings.product_image != blank %}
+        {{
+          section.settings.product_image
+          | image_url: width: 600
+          | image_tag:
+              loading: 'lazy',
+              widths: '300, 500, 600',
+              alt: 'VizionOne Professional Hand Cleaner bottle',
+              class: 'section-intro__img'
+        }}
+      {% else %}
+        <div class="image-placeholder">
+          <p>Upload product image</p>
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="section-intro__copy">
+      <p class="label label--red label--spaced">THE SOLUTION</p>
+
+      <h2 class="section-title section-title--left">
+        {{ section.settings.headline | default: 'MEET VIZIONONE. BUILT IN THE SHOP. FOR THE SHOP.' }}
+      </h2>
+
+      <p class="section-intro__body">
+        {{ section.settings.body | default: "VizionOne Professional Hand Cleaner was made from scratch — not off a factory shelf — by people who spend their days in a garage. Handcrafted in small batches using natural ingredients and jojoba beads that cut through the worst grime without destroying the skin underneath." }}
+      </p>
+
+      <ul class="check-list" aria-label="Key product benefits">
+        {% for block in section.blocks %}
+          <li class="check-list__item" {{ block.shopify_attributes }}>
+            <span class="check-list__icon" aria-hidden="true">&#10003;</span>
+            {{ block.settings.item }}
+          </li>
+        {% endfor %}
+      </ul>
+
+      <a href="#pricing" class="btn btn--red">
+        {{ section.settings.cta_text | default: 'ORDER YOURS NOW' }}
+      </a>
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product Intro",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "product_image",
+      "label": "Product image"
+    },
+    {
+      "type": "textarea",
+      "id": "headline",
+      "label": "Headline",
+      "default": "MEET VIZIONONE. BUILT IN THE SHOP. FOR THE SHOP."
+    },
+    {
+      "type": "textarea",
+      "id": "body",
+      "label": "Body copy",
+      "default": "VizionOne Professional Hand Cleaner was made from scratch — not off a factory shelf — by people who spend their days in a garage. Handcrafted in small batches using natural ingredients and jojoba beads that cut through the worst grime without destroying the skin underneath."
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA button text",
+      "default": "ORDER YOURS NOW"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "checklist_item",
+      "name": "Checklist Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "item",
+          "label": "Item text",
+          "default": "Cuts through grease, oil and polishing compounds"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Intro",
+      "blocks": [
+        { "type": "checklist_item", "settings": { "item": "Cuts through grease, oil and polishing compounds" } },
+        { "type": "checklist_item", "settings": { "item": "Jojoba beads for natural scrubbing action" } },
+        { "type": "checklist_item", "settings": { "item": "Skin conditioners built into every batch" } },
+        { "type": "checklist_item", "settings": { "item": "No harsh chemicals that burn or dry out skin" } },
+        { "type": "checklist_item", "settings": { "item": "Works on the first wash, every single time" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

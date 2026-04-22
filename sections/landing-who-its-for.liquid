@@ -1,0 +1,75 @@
+{% comment %}
+  sections/landing-who-its-for.liquid
+  Audience mirror section. Visitor sees themselves in the list.
+  Grid of use cases / professions. Schema-driven.
+{% endcomment %}
+
+<section class="section-who" aria-label="Who VizionOne is for">
+  <div class="container">
+
+    <h2 class="section-title">
+      {{ section.settings.headline | default: "IF YOUR HANDS GET DIRTY, THIS IS FOR YOU" }}
+    </h2>
+
+    <div class="who-grid">
+      {% for block in section.blocks %}
+        <div class="who-item" {{ block.shopify_attributes }}>
+          {% if block.settings.icon != blank %}
+            <span class="who-item__icon" aria-hidden="true">{{ block.settings.icon }}</span>
+          {% endif %}
+          <span class="who-item__label">{{ block.settings.label }}</span>
+        </div>
+      {% endfor %}
+    </div>
+
+    {% if section.settings.footnote != blank %}
+      <p class="who-footnote">{{ section.settings.footnote }}</p>
+    {% endif %}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Who It's For",
+  "settings": [
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline",
+      "default": "IF YOUR HANDS GET DIRTY, THIS IS FOR YOU"
+    },
+    {
+      "type": "text",
+      "id": "footnote",
+      "label": "Footnote",
+      "default": "Anyone who does real work with their hands."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "who_item",
+      "name": "Use Case",
+      "settings": [
+        { "type": "text", "id": "icon", "label": "Icon (emoji)", "default": "🔧" },
+        { "type": "text", "id": "label", "label": "Label", "default": "Mechanics & Technicians" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Who It's For",
+      "blocks": [
+        { "type": "who_item", "settings": { "icon": "🔧", "label": "Mechanics & Technicians" } },
+        { "type": "who_item", "settings": { "icon": "🚗", "label": "Auto Detailers" } },
+        { "type": "who_item", "settings": { "icon": "🏁", "label": "Racers & Crew" } },
+        { "type": "who_item", "settings": { "icon": "🔩", "label": "Fabricators & Welders" } },
+        { "type": "who_item", "settings": { "icon": "🏗", "label": "Construction & Trades" } },
+        { "type": "who_item", "settings": { "icon": "🖌", "label": "Painters & Finishers" } },
+        { "type": "who_item", "settings": { "icon": "⚡", "label": "Electricians & Installers" } },
+        { "type": "who_item", "settings": { "icon": "🛻", "label": "Fleet & Heavy Equipment" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,107 @@
+{% comment %}
+  sections/landing-testimonials.liquid
+  Social proof section. 3 testimonial cards.
+  All content editable via schema blocks.
+  Replace placeholder reviews with real ones as they come in.
+  id="reviews" — anchor target for nav link.
+{% endcomment %}
+
+<section class="section-testimonials" id="reviews" aria-label="Customer reviews">
+  <div class="container">
+
+    <h2 class="section-title">
+      {{ section.settings.headline | default: 'WHAT THE SHOP SAYS' }}
+    </h2>
+
+    <div class="testimonials-grid">
+      {% for block in section.blocks %}
+        <div class="testimonial-card" {{ block.shopify_attributes }}>
+          <div class="testimonial-card__stars" aria-label="{{ block.settings.rating }} stars out of 5">
+            {% for i in (1..block.settings.rating) %}
+              &#9733;
+            {% endfor %}
+          </div>
+          <blockquote class="testimonial-card__quote">
+            <p>{{ block.settings.quote }}</p>
+          </blockquote>
+          <cite class="testimonial-card__author">{{ block.settings.author }}</cite>
+        </div>
+      {% endfor %}
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Testimonials",
+  "settings": [
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline",
+      "default": "WHAT THE SHOP SAYS"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "type": "range",
+          "id": "rating",
+          "label": "Star rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Quote",
+          "default": "Customer review goes here."
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Author name / title",
+          "default": "Name — Location"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonials",
+      "blocks": [
+        {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "I've used Gojo for 15 years. VizionOne blew it out of the water. Hands feel clean without feeling like sandpaper. This is my shop's cleaner now.",
+            "author": "Mike R. — Lead Mechanic, Houston TX"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "We run a 6-bay detail shop. Ordered the gallon and two 6-packs. Guys love it. Smells great, works hard, doesn't dry out your hands. Won't go back.",
+            "author": "Danny S. — Detail Shop Owner, Spring TX"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "Race weekends mean dirty hands all day. VizionOne handles it and I don't wake up Sunday with cracked skin. Game changer for the whole crew.",
+            "author": "Travis K. — Race Crew Chief"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

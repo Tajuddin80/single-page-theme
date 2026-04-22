@@ -1,0 +1,61 @@
+{% comment %}
+  sections/landing-final-cta.liquid
+  Last conversion opportunity before the footer.
+  Bold headline, short copy, strong CTA, trust icons.
+{% endcomment %}
+
+<section class="section-final-cta" aria-label="Final call to action">
+  <div class="container section-final-cta__inner">
+
+    <h2 class="section-final-cta__headline">
+      {{ section.settings.headline | default: 'CLEAN HANDS.' }}<br>
+      <span class="text-red">
+        {{ section.settings.headline_red | default: 'BETTER WORK.' }}
+      </span>
+    </h2>
+
+    <p class="section-final-cta__body">
+      {{ section.settings.body | default: "Stop washing your hands with something that wrecks them. Order VizionOne today and feel the difference on your first use." }}
+    </p>
+
+    <a href="#pricing" class="btn btn--red btn--lg">
+      {{ section.settings.cta_text | default: 'ORDER NOW' }}
+    </a>
+
+    {% render 'trust-badges' %}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Final CTA",
+  "settings": [
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline (white)",
+      "default": "CLEAN HANDS."
+    },
+    {
+      "type": "text",
+      "id": "headline_red",
+      "label": "Headline (red accent)",
+      "default": "BETTER WORK."
+    },
+    {
+      "type": "textarea",
+      "id": "body",
+      "label": "Body copy",
+      "default": "Stop washing your hands with something that wrecks them. Order VizionOne today and feel the difference on your first use."
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA button text",
+      "default": "ORDER NOW"
+    }
+  ],
+  "presets": [{"name": "Final CTA"}]
+}
+{% endschema %}

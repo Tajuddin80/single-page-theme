@@ -1,0 +1,92 @@
+{% comment %}
+  sections/landing-benefits-strip.liquid
+  4-icon benefit burst immediately below the hero.
+  Fast proof scan for cold traffic.
+  Uses schema blocks so each benefit can be edited in the customizer.
+{% endcomment %}
+
+<section class="section-benefits" id="benefits" aria-label="Key benefits">
+  <div class="benefits-grid">
+    {% for block in section.blocks %}
+      <div class="benefit-item" {{ block.shopify_attributes }}>
+        {% if block.settings.icon != blank %}
+          <div class="benefit-item__icon">{{ block.settings.icon }}</div>
+        {% endif %}
+        <p class="benefit-item__label">{{ block.settings.label }}</p>
+        <p class="benefit-item__desc">{{ block.settings.description }}</p>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Benefits Strip",
+  "max_blocks": 4,
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Benefit",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon (emoji or text symbol)",
+          "default": "🛡"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Benefit label",
+          "default": "INDUSTRIAL STRENGTH"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Benefit description",
+          "default": "Removes grease, oil and grime fast"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Benefits Strip",
+      "blocks": [
+        {
+          "type": "benefit",
+          "settings": {
+            "icon": "🛡",
+            "label": "INDUSTRIAL STRENGTH",
+            "description": "Removes grease, oil and grime fast"
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "icon": "🤲",
+            "label": "SKIN FRIENDLY",
+            "description": "Conditioners keep hands soft"
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "icon": "🌿",
+            "label": "FRESH CLEAN SCENT",
+            "description": "Leaves hands clean and refreshed"
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "icon": "🇺🇸",
+            "label": "MADE IN THE USA",
+            "description": "Handcrafted in Greater Houston, TX"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

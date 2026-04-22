@@ -1,0 +1,102 @@
+{% comment %}
+  sections/landing-hero.liquid
+  Primary hero section. First thing the visitor sees.
+  - Pre-headline label
+  - Main H1 headline
+  - Sub-copy
+  - CTA button anchored to #pricing
+  - Trust line
+  - Product image (configurable via schema)
+  Layout: 2-column desktop, stacked mobile (image on top, copy below on mobile).
+{% endcomment %}
+
+<section class="section-hero" id="hero" aria-label="Hero">
+  <div class="container section-hero__inner">
+
+    <div class="section-hero__copy">
+      <p class="label label--red label--spaced">
+        {{ section.settings.pre_headline | default: 'PROFESSIONAL HAND CLEANER' }}
+      </p>
+
+      <h1 class="hero-headline">
+        {{ section.settings.headline | default: 'TOUGH ON DIRT.<br>GENTLE ON HANDS.' }}
+      </h1>
+
+      <p class="hero-sub">
+        {{ section.settings.subheadline | default: 'Industrial-strength hand cleaner built for real work. Grease, oil, grime — gone. Hands still intact.' }}
+      </p>
+
+      <a href="#pricing" class="btn btn--red btn--lg">
+        {{ section.settings.cta_text | default: 'ORDER NOW' }}
+      </a>
+
+      <p class="hero-trust">
+        <span class="hero-trust__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+        <span>{{ section.settings.trust_line | default: 'Used in shops, garages &amp; race trailers across America' }}</span>
+      </p>
+    </div>
+
+    <div class="section-hero__image">
+      {% if section.settings.hero_image != blank %}
+        {{
+          section.settings.hero_image
+          | image_url: width: 700
+          | image_tag:
+              loading: 'eager',
+              widths: '350, 500, 700',
+              alt: 'VizionOne Professional Hand Cleaner product lineup',
+              class: 'section-hero__img'
+        }}
+      {% else %}
+        <div class="section-hero__image-placeholder">
+          <p class="section-hero__image-placeholder-text">Upload product image</p>
+        </div>
+      {% endif %}
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Landing Hero",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero product image"
+    },
+    {
+      "type": "text",
+      "id": "pre_headline",
+      "label": "Pre-headline label",
+      "default": "PROFESSIONAL HAND CLEANER"
+    },
+    {
+      "type": "textarea",
+      "id": "headline",
+      "label": "Main headline (use <br> for line breaks)",
+      "default": "TOUGH ON DIRT.<br>GENTLE ON HANDS."
+    },
+    {
+      "type": "textarea",
+      "id": "subheadline",
+      "label": "Sub-headline",
+      "default": "Industrial-strength hand cleaner built for real work. Grease, oil, grime — gone. Hands still intact."
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA button text",
+      "default": "ORDER NOW"
+    },
+    {
+      "type": "text",
+      "id": "trust_line",
+      "label": "Trust line text",
+      "default": "Used in shops, garages & race trailers across America"
+    }
+  ],
+  "presets": [{"name": "Landing Hero"}]
+}
+{% endschema %}

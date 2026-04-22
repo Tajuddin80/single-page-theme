@@ -1,0 +1,41 @@
+{% comment %}
+  sections/landing-guarantee.liquid
+  Full-width red band. Kills last purchase fear.
+  Risk reversal / satisfaction guarantee.
+{% endcomment %}
+
+<section class="section-guarantee" aria-label="Satisfaction guarantee">
+  <div class="container container--narrow section-guarantee__inner">
+
+    <h2 class="section-guarantee__headline">
+      {{ section.settings.headline | default: '100% SATISFACTION. GUARANTEED.' }}
+    </h2>
+
+    <p class="section-guarantee__body">
+      {{ section.settings.body | default: "If VizionOne doesn't clean better than what you're using now, contact us. We'll make it right. No runaround, no forms, no games. Just a straight answer from a real shop brand." }}
+    </p>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Guarantee",
+  "settings": [
+  
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline",
+      "default": "100% SATISFACTION. GUARANTEED."
+    },
+    {
+      "type": "textarea",
+      "id": "body",
+      "label": "Body copy",
+      "default": "If VizionOne doesn't clean better than what you're using now, contact us. We'll make it right. No runaround, no forms, no games. Just a straight answer from a real shop brand."
+    }
+  ],
+  "presets": [{"name": "Guarantee"}]
+}
+{% endschema %}

@@ -1,0 +1,63 @@
+<div
+  class="cart-drawer"
+  id="landingCartDrawer"
+  data-cart-drawer
+  data-currency-code="{{ cart.currency.iso_code | default: shop.currency }}"
+  aria-hidden="true"
+  hidden
+>
+  <div class="cart-drawer__overlay" data-cart-overlay></div>
+
+  <aside
+    class="cart-drawer__panel"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="landingCartDrawerTitle"
+  >
+    <div class="cart-drawer__header">
+      <div>
+        <p class="label label--red label--spaced">YOUR CART</p>
+        <h2 class="cart-drawer__title" id="landingCartDrawerTitle">READY TO CHECK OUT</h2>
+      </div>
+
+      <button type="button" class="cart-drawer__close" data-cart-close aria-label="Close cart">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <div class="cart-drawer__status" data-cart-status hidden></div>
+
+    <div class="cart-drawer__content">
+      <div class="cart-drawer__loading" data-cart-loading hidden>Loading cart...</div>
+
+      <div class="cart-drawer__items" data-cart-items></div>
+
+      <div class="cart-drawer__empty" data-cart-empty hidden>
+        <p class="cart-drawer__empty-title">YOUR CART IS EMPTY</p>
+        <p class="cart-drawer__empty-body">Add a size and we'll keep it ready right here.</p>
+        <a href="#pricing" class="btn btn--red btn--full" data-cart-close>SHOP NOW</a>
+      </div>
+    </div>
+
+    <div class="cart-drawer__footer">
+      <div class="cart-drawer__summary">
+        <span class="cart-drawer__summary-label">Subtotal</span>
+        <strong class="cart-drawer__summary-value" data-cart-total>{{ cart.total_price | money }}</strong>
+      </div>
+
+      <form action="{{ routes.cart_url }}" method="post" class="cart-drawer__checkout-form">
+        <button
+          type="submit"
+          name="checkout"
+          class="btn btn--red btn--full cart-drawer__checkout"
+          data-cart-checkout
+          {% if cart.item_count == 0 %}
+          disabled
+          {% endif %}
+        >
+          CHECKOUT
+        </button>
+      </form>
+    </div>
+  </aside>
+</div>

@@ -1,0 +1,92 @@
+{% comment %}
+  sections/landing-footer.liquid
+  Site footer. Logo, nav links, legal links, copyright.
+  Policy pages must be created in Shopify Admin -> Online Store -> Pages or Policies.
+{% endcomment %}
+
+<footer class="site-footer" role="contentinfo">
+  <div class="site-footer__top-border" aria-hidden="true"></div>
+  <div class="container site-footer__inner">
+
+    {% comment %} BRAND COLUMN {% endcomment %}
+    <div class="site-footer__brand">
+      <a href="{{ routes.root_url }}" class="site-footer__logo" aria-label="VizionOne Home">
+        VIZION<span class="text-red">ONE</span>
+      </a>
+      <p class="site-footer__tagline">PROFESSIONAL HAND CLEANER</p>
+      <p class="site-footer__location">Made in Greater Houston, TX</p>
+      <p class="site-footer__url">viziononehandcleaner.com</p>
+    </div>
+
+    {% comment %} NAV COLUMN {% endcomment %}
+    <nav class="site-footer__nav" aria-label="Footer navigation">
+      <a href="#hero" class="site-footer__link">Home</a>
+      <a href="#benefits" class="site-footer__link">Benefits</a>
+      <a href="#pricing" class="site-footer__link">Pricing</a>
+      <a href="#reviews" class="site-footer__link">Reviews</a>
+      <a href="#faq" class="site-footer__link">FAQ</a>
+      {% if section.settings.contact_url != blank %}
+        <a href="{{ section.settings.contact_url }}" class="site-footer__link">Contact</a>
+      {% endif %}
+    </nav>
+
+    {% comment %} LEGAL COLUMN {% endcomment %}
+    <nav class="site-footer__legal" aria-label="Footer legal links">
+      {% if section.settings.legal_menu != blank and section.settings.legal_menu.links.size > 0 %}
+        {% for link in section.settings.legal_menu.links %}
+          <a
+            href="{{ link.url }}"
+            class="site-footer__link"
+            {% if link.current %}
+              aria-current="page"
+            {% endif %}
+          >
+            {{ link.title }}
+          </a>
+        {% endfor %}
+      {% else %}
+        {% comment %}
+          Shopify policy pages are accessible via shop.privacy_policy, shop.terms_of_service, shop.refund_policy.
+          These are only available if policies are set in Shopify Admin -> Settings -> Policies.
+        {% endcomment %}
+        {% if shop.privacy_policy.url %}
+          <a href="{{ shop.privacy_policy.url }}" class="site-footer__link">Privacy Policy</a>
+        {% endif %}
+        {% if shop.terms_of_service.url %}
+          <a href="{{ shop.terms_of_service.url }}" class="site-footer__link">Terms of Service</a>
+        {% endif %}
+        {% if shop.refund_policy.url %}
+          <a href="{{ shop.refund_policy.url }}" class="site-footer__link">Refund Policy</a>
+        {% endif %}
+        {% if section.settings.contact_url != blank %}
+          <a href="{{ section.settings.contact_url }}" class="site-footer__link">Contact</a>
+        {% endif %}
+      {% endif %}
+    </nav>
+
+  </div>
+
+  <div class="site-footer__copyright">
+    <div class="container">
+      <p>&copy; {{ 'now' | date: '%Y' }} VizionOne Professional Hand Cleaner. All rights reserved. Proudly made in Greater Houston, TX.</p>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Landing Footer",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "legal_menu",
+      "label": "Right column menu"
+    },
+    {
+      "type": "url",
+      "id": "contact_url",
+      "label": "Contact page URL (optional)"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,139 @@
+{% comment %}
+================================================================================
+  VizionOne Professional Hand Cleaner — Landing Page Template
+  File: templates/page.landing.liquid
+
+  HOW THIS TEMPLATE WORKS
+  ─────────────────────────────────────────────────────────────────────────────
+  This is a Shopify PAGE TEMPLATE. It renders INSIDE your theme's layout
+  file (layout/theme.liquid). That file already provides:
+    <html>, <head>, <body>, {{ content_for_header }}, closing tags.
+  Do NOT add a full HTML document structure here. That was the bug in v1.
+
+  HOW TO ASSIGN THIS TEMPLATE
+  ─────────────────────────────────────────────────────────────────────────────
+  Shopify Admin → Online Store → Pages → [Your page] →
+  Theme template dropdown (right sidebar) → select "landing" → Save.
+
+  To use as your homepage:
+  Admin → Online Store → Navigation → set as homepage.
+
+  THEME HEADER / FOOTER CONFLICT
+  ─────────────────────────────────────────────────────────────────────────────
+  Because this renders inside theme.liquid, your theme's own header and
+  footer will also appear unless suppressed.
+
+  OPTION A — CSS hide (fastest, use for 24-hour launch):
+  Add to the bottom of landing.css:
+    .shopify-section-header, .shopify-section-footer,
+    header[role="banner"]:not(.site-header),
+    footer[role="contentinfo"]:not(.site-footer) { display: none !important; }
+  Inspect your theme's actual header/footer class names and adjust.
+
+  OPTION B — Blank layout (cleanest, add 30 min):
+  Create layout/landing.liquid with only:
+    {{ content_for_header }}{{ content_for_layout }}
+  Then add {% layout 'landing' %} as the very first line of this file.
+  This gives total isolation from theme bleed.
+
+  SEO TAGS
+  ─────────────────────────────────────────────────────────────────────────────
+  Title, meta description, and OG tags are injected via content_for_header
+  by Shopify when page title/content is set in Admin. The tags below provide
+  hardcoded fallbacks for the landing page context.
+
+  FONTS
+  ─────────────────────────────────────────────────────────────────────────────
+  Loaded here with rel="stylesheet" rather than blocking @import.
+  If your theme already loads these fonts, remove these lines to avoid
+  double-loading.
+================================================================================
+{% endcomment %}
+
+{% comment %} Uncomment to use a blank layout (OPTION B above): {% endcomment %}
+{% comment %} {% layout 'landing' %} {% endcomment %}
+
+{% comment %}
+  ── SEO FALLBACKS ──
+  Shopify injects canonical <title> and meta via content_for_header
+  when a page has title/content set. These are supplemental fallbacks.
+  They are injected into <head> by Shopify's content_for_header mechanism
+  when placed in a page template. Note: only <title> and <meta> tags
+  placed directly in a page template will be honoured — Shopify lifts
+  recognised head tags from page templates into <head> automatically
+  via content_for_header.
+{% endcomment %}
+<title>
+  {%- if page.title != blank -%}
+    {{ page.title | escape }} | {{ shop.name | escape }}
+  {%- else -%}
+    VizionOne Professional Hand Cleaner | Tough On Dirt. Gentle On Hands.
+  {%- endif -%}
+</title>
+
+<meta name="description" content="VizionOne Professional Hand Cleaner — Industrial strength, gentle on skin. Built for mechanics, detailers, racers, and tradesmen. Handcrafted in Greater Houston, TX.">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="{{ page.title | default: 'VizionOne Professional Hand Cleaner' | escape }}">
+<meta property="og:description" content="Industrial strength hand cleaner built for real work. Tough on dirt. Gentle on hands. Made in Greater Houston, TX.">
+<meta property="og:url" content="{{ canonical_url }}">
+<meta property="og:site_name" content="{{ shop.name | escape }}">
+{%- if settings.share_image -%}
+  <meta property="og:image" content="{{ settings.share_image | image_url: width: 1200 }}">
+{%- endif -%}
+
+{% comment %} ── Google Fonts (remove if theme already loads these) ── {% endcomment %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;500;600;700&family=Oswald:wght@400;500;600;700&display=swap">
+
+{% comment %} ── Landing page stylesheet ── {% endcomment %}
+{{ 'landing.css' | asset_url | stylesheet_tag }}
+
+{% comment %} ─────────────────────────────────────────────────────────────────
+  PAGE SECTIONS
+───────────────────────────────────────────────────────────────────────────── {% endcomment %}
+
+{% section 'announcement-bar' %}
+{% section 'landing-header' %}
+
+<main id="main-content" role="main">
+
+  {% section 'landing-hero' %}
+  {% section 'landing-benefits-strip' %}
+  {% section 'landing-problem' %}
+  {% section 'landing-product-intro' %}
+  {% section 'landing-ingredients' %}
+  {% section 'landing-why-different' %}
+
+  <div id="pricing">
+    {% section 'landing-pricing' %}
+  </div>
+
+  {% section 'landing-deep-benefits' %}
+  {% section 'landing-how-it-works' %}
+  {% section 'landing-who-its-for' %}
+  {% section 'landing-comparison' %}
+  {% section 'landing-testimonials' %}
+  {% section 'landing-guarantee' %}
+  {% section 'landing-faq' %}
+  {% section 'landing-final-cta' %}
+
+</main>
+
+{% section 'landing-footer' %}
+
+{% comment %} ── Sticky mobile buy bar ── {% endcomment %}
+<div
+  class="sticky-buy-bar"
+  id="stickyBuyBar"
+  role="region"
+  aria-label="Quick buy"
+  aria-hidden="true"
+>
+  <span class="sticky-buy-bar__name">VizionOne Hand Cleaner</span>
+  <a href="#pricing" class="btn btn--red sticky-buy-bar__cta" aria-label="Order VizionOne now">ORDER NOW</a>
+</div>
+
+{% comment %} ── JS: deferred so it never blocks render ── {% endcomment %}
+<script src="{{ 'landing.js' | asset_url }}" defer></script>

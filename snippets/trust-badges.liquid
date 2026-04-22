@@ -1,0 +1,25 @@
+{% comment %}
+  snippets/trust-badges.liquid
+  Reusable trust badge row. Rendered below every Add to Cart button and at the final CTA.
+  Usage: {% render 'trust-badges' %}
+  No parameters required.
+{% endcomment %}
+
+<div class="trust-badges" aria-label="Trust indicators">
+  <div class="trust-badge">
+    <span class="trust-badge__icon" aria-hidden="true">&#128274;</span>
+    <span class="trust-badge__text">Secure Checkout</span>
+  </div>
+  <div class="trust-badge">
+    <span class="trust-badge__icon" aria-hidden="true">&#127482;&#127480;</span>
+    <span class="trust-badge__text">Made in USA</span>
+  </div>
+  <div class="trust-badge">
+    <span class="trust-badge__icon" aria-hidden="true">&#128230;</span>
+    <span class="trust-badge__text">Ships Nationwide</span>
+  </div>
+  <div class="trust-badge">
+    <span class="trust-badge__icon" aria-hidden="true">&#10003;</span>
+    <span class="trust-badge__text">100% Satisfaction</span>
+  </div>
+</div>

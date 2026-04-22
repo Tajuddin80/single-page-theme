@@ -1,0 +1,92 @@
+{% comment %}
+  sections/landing-comparison.liquid
+  Comparison table: VizionOne vs. mass-market competitors.
+  Rows are schema-driven. Headers are static settings.
+  Designed to position VizionOne as premium vs. Gojo/Fast Orange/Zep.
+{% endcomment %}
+
+<section class="section-comparison" aria-label="VizionOne vs competitors">
+  <div class="container">
+
+    <h2 class="section-title">
+      {{ section.settings.headline | default: 'VIZIONONE VS. THE REST' }}
+    </h2>
+
+    <div class="comparison-table-wrap" role="region" aria-label="Comparison table" tabindex="0">
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th scope="col" class="comparison-table__feature-col">FEATURE</th>
+            <th scope="col" class="comparison-table__v1-col">VIZIONONE</th>
+            <th scope="col" class="comparison-table__comp-col">
+              {{ section.settings.competitor_label | default: 'GOJO / FAST ORANGE / ZEP' }}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for block in section.blocks %}
+            <tr {{ block.shopify_attributes }}>
+              <td class="comparison-table__feature">{{ block.settings.feature }}</td>
+              <td class="comparison-table__v1">
+                {% if block.settings.v1_yes %}
+                  <span class="check-yes" aria-label="Yes">&#10003; YES</span>
+                {% else %}
+                  <span class="check-no" aria-label="No">&#10005;</span>
+                {% endif %}
+              </td>
+              <td class="comparison-table__comp">
+                <span class="check-no">{{ block.settings.competitor_value | default: '✕ No' }}</span>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Comparison Table",
+  "settings": [
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline",
+      "default": "VIZIONONE VS. THE REST"
+    },
+    {
+      "type": "text",
+      "id": "competitor_label",
+      "label": "Competitor column label",
+      "default": "GOJO / FAST ORANGE / ZEP"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "comparison_row",
+      "name": "Comparison Row",
+      "settings": [
+        { "type": "text", "id": "feature", "label": "Feature name", "default": "Handcrafted formula" },
+        { "type": "checkbox", "id": "v1_yes", "label": "VizionOne: Yes?", "default": true },
+        { "type": "text", "id": "competitor_value", "label": "Competitor value", "default": "✕ Mass-produced" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Comparison Table",
+      "blocks": [
+        { "type": "comparison_row", "settings": { "feature": "Handcrafted formula", "v1_yes": true, "competitor_value": "✕ Mass-produced" } },
+        { "type": "comparison_row", "settings": { "feature": "Natural ingredients", "v1_yes": true, "competitor_value": "✕ Synthetic filler" } },
+        { "type": "comparison_row", "settings": { "feature": "Jojoba bead scrubbing", "v1_yes": true, "competitor_value": "✕ Pumice / synthetic" } },
+        { "type": "comparison_row", "settings": { "feature": "Skin conditioners", "v1_yes": true, "competitor_value": "⚠ Minimal at best" } },
+        { "type": "comparison_row", "settings": { "feature": "No harsh chemicals", "v1_yes": true, "competitor_value": "✕ Heavy chemical base" } },
+        { "type": "comparison_row", "settings": { "feature": "Small batch, USA-made", "v1_yes": true, "competitor_value": "✕ Factory produced" } },
+        { "type": "comparison_row", "settings": { "feature": "Built for repeated daily use", "v1_yes": true, "competitor_value": "✕ Not designed for it" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

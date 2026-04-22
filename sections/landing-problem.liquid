@@ -1,0 +1,106 @@
+{% comment %}
+  sections/landing-problem.liquid
+  Pain point empathy section. Connects emotionally before presenting solution.
+  Supports editable copy plus an optional section image.
+{% endcomment %}
+
+<section class="section-problem" aria-label="The problem with cheap hand cleaners">
+  <div class="container">
+    <div class="section-problem__inner{% if section.settings.problem_image == blank %} section-problem__inner--no-media{% endif %}">
+
+      <div class="section-problem__copy">
+        <h2 class="section-problem__headline">
+          {{ section.settings.headline | default: "YOU WASH YOUR HANDS 10X A DAY. YOUR CLEANER SHOULDN'T WRECK THEM." }}
+        </h2>
+
+        <p class="section-problem__body">
+          {{ section.settings.body | default: "Cheap hand cleaners strip your skin raw. They leave residue. They smell like a chemical plant. And after a year of daily use, your hands look like sandpaper. You work hard — you deserve a cleaner that works just as hard without destroying your hands." }}
+        </p>
+
+        <ul class="pain-list" aria-label="Common problems with mass-market hand cleaners">
+          {% for block in section.blocks %}
+            <li class="pain-list__item" {{ block.shopify_attributes }}>
+              <span class="pain-list__icon" aria-hidden="true">&#10005;</span>
+              {{ block.settings.pain_point }}
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      {% if section.settings.problem_image != blank %}
+        {% assign problem_image_alt = section.settings.image_alt | default: 'Hands holding abrasive material' %}
+        <div class="section-problem__media">
+          <div class="section-problem__image-frame">
+            {{
+              section.settings.problem_image
+              | image_url: width: 900
+              | image_tag:
+                  loading: 'lazy',
+                  widths: '400, 600, 900',
+                  alt: problem_image_alt,
+                  class: 'section-problem__img'
+            }}
+          </div>
+        </div>
+      {% endif %}
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Problem Section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "problem_image",
+      "label": "Section image"
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Image alt text",
+      "default": "Hands holding abrasive material"
+    },
+    {
+      "type": "textarea",
+      "id": "headline",
+      "label": "Headline",
+      "default": "YOU WASH YOUR HANDS 10X A DAY. YOUR CLEANER SHOULDN'T WRECK THEM."
+    },
+    {
+      "type": "textarea",
+      "id": "body",
+      "label": "Body copy",
+      "default": "Cheap hand cleaners strip your skin raw. They leave residue. They smell like a chemical plant. And after a year of daily use, your hands look like sandpaper. You work hard — you deserve a cleaner that works just as hard without destroying your hands."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "pain_point",
+      "name": "Pain Point",
+      "settings": [
+        {
+          "type": "text",
+          "id": "pain_point",
+          "label": "Pain point text",
+          "default": "Grease that won't fully come off"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Problem Section",
+      "blocks": [
+        { "type": "pain_point", "settings": { "pain_point": "Grease that won't fully come off" } },
+        { "type": "pain_point", "settings": { "pain_point": "Skin that feels burned and stripped after washing" } },
+        { "type": "pain_point", "settings": { "pain_point": "Film and residue left behind after rinsing" } },
+        { "type": "pain_point", "settings": { "pain_point": "Chemical smell that follows you home from the shop" } },
+        { "type": "pain_point", "settings": { "pain_point": "Cracked, destroyed hands from repeated daily use" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

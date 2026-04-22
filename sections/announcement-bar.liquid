@@ -1,0 +1,27 @@
+{% comment %}
+  sections/announcement-bar.liquid
+  Full-width top bar. Scrolling marquee on mobile for long text.
+  Schema allows text to be edited in the Shopify customizer.
+{% endcomment %}
+
+<div class="announcement-bar" role="banner">
+  <div class="announcement-bar__inner">
+    <p class="announcement-bar__text">
+      {{ section.settings.message }}
+    </p>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Announcement Bar",
+  "settings": [
+    {
+      "type": "text",
+      "id": "message",
+      "label": "Announcement text",
+      "default": "🇺🇸 PROUDLY MADE IN THE USA — FREE SHIPPING ON ORDERS OVER $75 — SHIPS NATIONWIDE FROM GREATER HOUSTON, TX"
+    }
+  ]
+}
+{% endschema %}

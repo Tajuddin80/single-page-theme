@@ -1,0 +1,98 @@
+{% comment %}
+  sections/landing-header.liquid
+  Sticky navigation header.
+  - Logo (text or image — controlled via schema)
+  - Anchor nav links pointing to page sections
+  - "BUY NOW" CTA that scrolls to #pricing
+  - Mobile: hamburger menu toggled by JS
+{% endcomment %}
+
+{% assign mobile_menu_id = 'mobileMenu-' | append: section.id %}
+
+<header class="site-header" id="siteHeader-{{ section.id }}" role="banner" data-site-header>
+  <div class="site-header__inner">
+
+    {% comment %} LOGO {% endcomment %}
+    <a href="{{ routes.root_url }}" class="site-header__logo" aria-label="VizionOne Home">
+      {% if section.settings.logo_image != blank %}
+        {{
+          section.settings.logo_image
+          | image_url: width: 200
+          | image_tag: loading: 'eager', alt: 'VizionOne Professional Hand Cleaner', class: 'site-header__logo-img'
+        }}
+      {% else %}
+        <span class="site-header__logo-text">
+          VIZION<span class="text-red">ONE</span>
+        </span>
+      {% endif %}
+    </a>
+
+    {% comment %} DESKTOP NAV {% endcomment %}
+    <nav class="site-header__nav" aria-label="Main navigation">
+      <a href="#benefits" class="site-header__nav-link">Benefits</a>
+      <a href="#pricing" class="site-header__nav-link">Pricing</a>
+      <a href="#reviews" class="site-header__nav-link">Reviews</a>
+      <a href="#faq" class="site-header__nav-link">FAQ</a>
+    </nav>
+
+    {% comment %} CTA + MOBILE TOGGLE {% endcomment %}
+    <div class="site-header__actions">
+      <a href="#pricing" class="btn btn--red site-header__cta">BUY NOW</a>
+      <a
+        href="{{ routes.cart_url }}"
+        class="site-header__cart"
+        data-cart-toggle
+        aria-controls="landingCartDrawer"
+        aria-expanded="false"
+        aria-label="Open cart"
+      >
+        <span class="site-header__cart-icon" aria-hidden="true">
+          {{ 'icon-cart.svg' | inline_asset_content }}
+        </span>
+        <span
+          class="site-header__cart-count"
+          data-cart-count
+          {% if cart.item_count == 0 %}
+          hidden
+          {% endif %}
+        >
+          {{ cart.item_count }}
+        </span>
+      </a>
+      <button
+        class="site-header__mobile-toggle"
+        data-mobile-menu-toggle
+        aria-controls="{{ mobile_menu_id }}"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+
+  </div>
+
+  {% comment %} MOBILE MENU DRAWER {% endcomment %}
+  <div class="site-header__mobile-menu" id="{{ mobile_menu_id }}" data-mobile-menu aria-hidden="true">
+    <a href="#benefits" class="site-header__mobile-link">Benefits</a>
+    <a href="#pricing" class="site-header__mobile-link">Pricing</a>
+    <a href="#reviews" class="site-header__mobile-link">Reviews</a>
+    <a href="#faq" class="site-header__mobile-link">FAQ</a>
+    <a href="#pricing" class="btn btn--red btn--full site-header__mobile-cta">ORDER NOW</a>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Landing Header",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo_image",
+      "label": "Logo image (optional — leave blank to use text logo)"
+    }
+  ]
+}
+{% endschema %}
