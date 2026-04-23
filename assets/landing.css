@@ -135,23 +135,22 @@ button {
    ============================================================ */
 
 .btn {
-  display: inline-block;
-  font-family: "Oswald", sans-serif;
-  font-weight: 700;
-  font-size: 1rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  padding: 0.875rem 2rem;
-  border: none;
-  cursor: pointer;
-  text-align: center;
-  text-decoration: none;
-  transition:
-    background-color 0.15s ease,
-    transform 0.1s ease;
-  -webkit-appearance: none;
-  appearance: none;
-  line-height: 1;
+    display: inline-block;
+    font-family: Oswald,sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    padding: 1.125rem 3rem;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color .15s ease,transform .1s ease;
+    -webkit-appearance: none;
+    appearance: none;
+    line-height: 1;
 }
 
 .btn--red {
@@ -325,7 +324,7 @@ button {
 }
 
 .site-header__cart {
-  width: 33px;
+  width: 56px;
   height: 33px;
   display: inline-flex;
   align-items: center;
@@ -1470,7 +1469,6 @@ body.is-locked {
 
 /* Form footer: CTA + trust badges */
 .pricing-form-footer {
-  max-width: 480px;
   margin: 0 auto;
 }
 
@@ -1497,15 +1495,17 @@ body.is-locked {
    13. TRUST BADGES SNIPPET
    ============================================================ */
 
+
 .trust-badges {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1.25rem;
-  flex-wrap: wrap;
-  padding-top: 1.25rem;
-  border-top: 1px solid #222222;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+    padding-top: 1.25rem;
+    border-top: 1px solid #222222;
 }
+
 
 .trust-badge {
   display: flex;

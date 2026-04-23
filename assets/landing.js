@@ -15,10 +15,10 @@
 (function () {
   'use strict';
 
-  if (window.__v1LandingInitialized) {
-    return;
-  }
-  window.__v1LandingInitialized = true;
+if (window.__v1LandingInitialized && !window.Shopify?.designMode) {
+  return;
+}
+window.__v1LandingInitialized = true;
 
   var FETCH_TIMEOUT_MS = 10000;
   var DRAWER_TRANSITION_MS = 250;
@@ -754,4 +754,22 @@
 
     closeAllMobileMenus();
   });
+
+
+  /* ============================================================
+   10. Shopify Customizer live-preview re-init
+============================================================ */
+
+document.addEventListener('shopify:section:load', function () {
+  // Re-reveal pricing grid after Customizer re-renders the section
+  doc.querySelectorAll('.js-pricing-grid').forEach(function (grid) {
+    grid.classList.remove('no-js-hidden');
+  });
+
+  // Re-hide the fallback select
+  doc.querySelectorAll('.no-js-select-wrap').forEach(function (selectWrap) {
+    selectWrap.setAttribute('aria-hidden', 'true');
+    selectWrap.style.cssText = 'position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0';
+  });
+});
 })();

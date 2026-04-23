@@ -21,10 +21,21 @@
     <a href="#pricing" class="btn btn--red btn--lg">
       {{ section.settings.cta_text | default: 'ORDER NOW' }}
     </a>
-
-    {% render 'trust-badges' %}
+   {% render 'trust-badges',
+            secure_icon: section.settings.trust_icon_secure,
+            usa_icon: section.settings.trust_icon_usa,
+            ships_icon: section.settings.trust_icon_ships,
+            satisfaction_icon: section.settings.trust_icon_satisfaction,
+            secure_text: section.settings.trust_text_secure,
+            usa_text: section.settings.trust_text_usa,
+            ships_text: section.settings.trust_text_ships,
+            satisfaction_text: section.settings.trust_text_satisfaction,
+            icon_size: section.settings.trust_icon_size
+          %}
+ 
 
   </div>
+  
 </section>
 
 {% schema %}
@@ -54,6 +65,67 @@
       "id": "cta_text",
       "label": "CTA button text",
       "default": "ORDER NOW"
+    },
+    {
+      "type": "header",
+      "content": "Trust Badge Icons"
+    },
+    {
+      "type": "image_picker",
+      "id": "trust_icon_secure",
+      "label": "Secure Checkout Icon"
+    },
+    {
+      "type": "image_picker",
+      "id": "trust_icon_usa",
+      "label": "Made in USA Icon"
+    },
+    {
+      "type": "image_picker",
+      "id": "trust_icon_ships",
+      "label": "Ships Nationwide Icon"
+    },
+    {
+      "type": "image_picker",
+      "id": "trust_icon_satisfaction",
+      "label": "100% Satisfaction Icon"
+    },
+    {
+      "type": "range",
+      "id": "trust_icon_size",
+      "label": "Icon Size (px)",
+      "min": 20,
+      "max": 120,
+      "step": 4,
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Trust Badge Labels"
+    },
+    {
+      "type": "text",
+      "id": "trust_text_secure",
+      "label": "Secure Checkout label",
+      "default": "Secure Checkout"
+    },
+    {
+      "type": "text",
+      "id": "trust_text_usa",
+      "label": "Made in USA label",
+      "default": "Made in USA"
+    },
+    {
+      "type": "text",
+      "id": "trust_text_ships",
+      "label": "Ships Nationwide label",
+      "default": "Ships Nationwide"
+    },
+    {
+      "type": "text",
+      "id": "trust_text_satisfaction",
+      "label": "100% Satisfaction label",
+      "default": "100% Satisfaction"
     }
   ],
   "presets": [{"name": "Final CTA"}]

@@ -2,24 +2,78 @@
   snippets/trust-badges.liquid
   Reusable trust badge row. Rendered below every Add to Cart button and at the final CTA.
   Usage: {% render 'trust-badges' %}
-  No parameters required.
+  Parameters: secure_icon, usa_icon, ships_icon, satisfaction_icon,
+              secure_text, usa_text, ships_text, satisfaction_text,
+              icon_size (px, default 40)
 {% endcomment %}
 
-<div class="trust-badges" aria-label="Trust indicators">
+{% assign badge_size = icon_size | default: 40 %}
+
+<div class="trust-badges" aria-label="Trust indicators" style="--badge-size: {{ badge_size }}px;">
   <div class="trust-badge">
-    <span class="trust-badge__icon" aria-hidden="true">&#128274;</span>
-    <span class="trust-badge__text">Secure Checkout</span>
+    {% if secure_icon != blank %}
+      {{
+        secure_icon
+        | image_url: width: badge_size
+        | image_tag: width: badge_size, height: badge_size, style: 'object-fit: contain;', alt: 'Secure Checkout'
+      }}
+    {% else %}
+      <span class="trust-badge__icon" aria-hidden="true">&#128274;</span>
+    {% endif %}
+    <span class="trust-badge__text">{{ secure_text | default: 'Secure Checkout' }}</span>
   </div>
+
   <div class="trust-badge">
-    <span class="trust-badge__icon" aria-hidden="true">&#127482;&#127480;</span>
-    <span class="trust-badge__text">Made in USA</span>
+    {% if usa_icon != blank %}
+      {{
+        usa_icon
+        | image_url: width: badge_size
+        | image_tag: width: badge_size, height: badge_size, style: 'object-fit: contain;', alt: 'Made in USA'
+      }}
+    {% else %}
+      <span class="trust-badge__icon" aria-hidden="true">&#127482;&#127480;</span>
+    {% endif %}
+    <span class="trust-badge__text">{{ usa_text | default: 'Made in USA' }}</span>
   </div>
+
   <div class="trust-badge">
-    <span class="trust-badge__icon" aria-hidden="true">&#128230;</span>
-    <span class="trust-badge__text">Ships Nationwide</span>
+    {% if ships_icon != blank %}
+      {{
+        ships_icon
+        | image_url: width: badge_size
+        | image_tag: width: badge_size, height: badge_size, style: 'object-fit: contain;', alt: 'Ships Nationwide'
+      }}
+    {% else %}
+      <span class="trust-badge__icon" aria-hidden="true">&#128230;</span>
+    {% endif %}
+    <span class="trust-badge__text">{{ ships_text | default: 'Ships Nationwide' }}</span>
   </div>
+
   <div class="trust-badge">
-    <span class="trust-badge__icon" aria-hidden="true">&#10003;</span>
-    <span class="trust-badge__text">100% Satisfaction</span>
+    {% if satisfaction_icon != blank %}
+      {{
+        satisfaction_icon
+        | image_url: width: badge_size
+        | image_tag: width: badge_size, height: badge_size, style: 'object-fit: contain;', alt: '100% Satisfaction'
+      }}
+    {% else %}
+      <span class="trust-badge__icon" aria-hidden="true">&#10003;</span>
+    {% endif %}
+    <span class="trust-badge__text">{{ satisfaction_text | default: '100% Satisfaction' }}</span>
   </div>
 </div>
+
+<style>
+  .trust-badges .trust-badge img {
+    width: var(--badge-size, 40px);
+    height: var(--badge-size, 40px);
+    object-fit: contain;
+  }
+
+  @media (max-width: 436px) {
+    .trust-badges {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+</style>

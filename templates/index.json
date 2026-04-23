@@ -26,7 +26,9 @@
         "benefit_UbVa6Q": {
           "type": "benefit",
           "settings": {
-            "icon": "🛡️",
+            "icon": "shopify://shop_images/shield.png",
+            "icon_width": 110,
+            "icon_height": 110,
             "label": "Industrial Strength",
             "description": "Removes grease, oil & grime fast"
           }
@@ -34,7 +36,9 @@
         "benefit_f6Gj3k": {
           "type": "benefit",
           "settings": {
-            "icon": "🤳",
+            "icon": "shopify://shop_images/washing-hand.png",
+            "icon_width": 110,
+            "icon_height": 110,
             "label": "Skin Friendly",
             "description": "Conditioners keep hands soft"
           }
@@ -42,7 +46,9 @@
         "benefit_FEbMRY": {
           "type": "benefit",
           "settings": {
-            "icon": "🌿",
+            "icon": "shopify://shop_images/perfume.png",
+            "icon_width": 110,
+            "icon_height": 110,
             "label": "Fresh Clean Scent",
             "description": "Leaves hands refreshed"
           }
@@ -50,7 +56,9 @@
         "benefit_UW6H9A": {
           "type": "benefit",
           "settings": {
-            "icon": "⚡",
+            "icon": "shopify://shop_images/flag.png",
+            "icon_width": 110,
+            "icon_height": 110,
             "label": "Made in the USA",
             "description": "Handcrafted in Greater Houston, TX"
           }
@@ -213,7 +221,16 @@
         "product_handle": "vizionone-professional-hand-cleaner",
         "headline": "CHOOSE YOUR SIZE. ORDER TODAY.",
         "subheadline": "Tax and shipping calculated at checkout. Ships from Greater Houston, TX.",
-        "helper_text": "Most individuals order the 32 oz. Shops order the Gallon or 12-Pack."
+        "helper_text": "Most individuals order the 32 oz. Shops order the Gallon or 12-Pack.",
+        "trust_icon_secure": "shopify://shop_images/padlock.png",
+        "trust_icon_usa": "shopify://shop_images/flag.png",
+        "trust_icon_ships": "shopify://shop_images/parcels.png",
+        "trust_icon_satisfaction": "shopify://shop_images/review.png",
+        "trust_icon_size": 52,
+        "trust_text_secure": "Secure Checkout",
+        "trust_text_usa": "Made in USA",
+        "trust_text_ships": "Ships Nationwide",
+        "trust_text_satisfaction": "100% Satisfaction"
       }
     },
     "landing-why-different": {
@@ -430,7 +447,16 @@
         "headline": "CLEAN HANDS.",
         "headline_red": "BETTER WORK.",
         "body": "Stop washing your hands with something that wrecks them. Order VizionOne today and feel the difference on your first use.",
-        "cta_text": "ORDER NOW"
+        "cta_text": "ORDER NOW",
+        "trust_icon_secure": "shopify://shop_images/padlock.png",
+        "trust_icon_usa": "shopify://shop_images/flag.png",
+        "trust_icon_ships": "shopify://shop_images/parcels.png",
+        "trust_icon_satisfaction": "shopify://shop_images/review.png",
+        "trust_icon_size": 52,
+        "trust_text_secure": "Secure Checkout",
+        "trust_text_usa": "Made in USA",
+        "trust_text_ships": "Ships Nationwide",
+        "trust_text_satisfaction": "100% Satisfaction"
       }
     }
   },
