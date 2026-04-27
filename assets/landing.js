@@ -168,6 +168,7 @@ window.__v1LandingInitialized = true;
 
   function renderCartItem(item) {
     var title = escapeHtml(item.product_title || item.title);
+    var unitPrice = item.final_price != null ? item.final_price : item.price;
     var variantTitle = item.variant_title && item.variant_title !== 'Default Title'
       ? '<p class="cart-drawer__item-variant">' + escapeHtml(item.variant_title) + '</p>'
       : '';
@@ -194,7 +195,7 @@ window.__v1LandingInitialized = true;
         '<div class="cart-drawer__item-content">' +
           '<div class="cart-drawer__item-title-row">' +
             '<h3 class="cart-drawer__item-title">' + title + '</h3>' +
-            '<p class="cart-drawer__item-price">' + formatMoney(item.final_line_price, cartCurrencyCode) + '</p>' +
+            '<p class="cart-drawer__item-price">' + formatMoney(unitPrice, cartCurrencyCode) + '</p>' +
           '</div>' +
           variantTitle +
           '<div class="cart-drawer__item-controls">' +
