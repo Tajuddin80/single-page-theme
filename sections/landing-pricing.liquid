@@ -17,25 +17,28 @@
 
   This version uses VARIANT METAFIELDS instead:
   Namespace: custom
-  Keys: badge, description
+  Keys: vizionone_badge, vizionone_card_desc
   Type: single_line_text_field
 
-  Each variant can have an optional metafield value:
-  "MOST POPULAR" → red featured badge + featured card styling
-  "STARTER SIZE" → neutral badge
-  "BEST FOR SHOPS" → shop badge
+  Each variant can have optional metafield values:
+  - custom.vizionone_badge renders the badge text
+  - custom.vizionone_card_desc renders the description under the size title
+  Styling stays tied to the existing card UI:
+  - standard badges render in the neutral badge style
+  - shop-related badges render in the shop badge style
+  - the selected card still turns the badge red automatically
   (empty) → no badge
 
   HOW TO SET METAFIELDS IN SHOPIFY ADMIN
   ─────────────────────────────────────────────────────────────────────────────
   1. Admin → Settings → Custom data → Variants → Add definition
   - Name: Badge
-  - Namespace & key: custom.badge
+  - Namespace & key: custom.vizionone_badge
   - Type: Single line text
   - Save.
-  - Add a second definition: Description (custom.description)
+  - Add a second definition: Card description (custom.vizionone_card_desc)
   2. Admin → Products → [VizionOne product] → [Each variant] → scroll to Metafields
-  - Set "Badge" and "Description" for each variant as needed.
+  - Set "Badge" and "Card description" for each variant as needed.
   3. No code changes needed — the badge renders automatically.
 
   VARIANT TITLE DEPENDENCY: ELIMINATED.
@@ -71,16 +74,14 @@
   <section
     class="section-pricing"
     id="section-pricing"
-    aria-label="Product pricing and purchase options"
-  >
+    aria-label="Product pricing and purchase options">
     <div class="container">
       <h2 class="section-title">
         {{ section.settings.headline | default: 'CHOOSE YOUR SIZE. ORDER TODAY.' }}
       </h2>
       <p class="section-sub">
         {{
-          section.settings.subheadline
-          | default: 'Tax and shipping calculated at checkout. Ships from Greater Houston, TX.'
+          section.settings.subheadline | default: 'Tax and shipping calculated at checkout. Ships from Greater Houston, TX.'
         }}
       </p>
 
@@ -91,7 +92,11 @@
       {%- if v1_product != blank -%}
         {%- assign first_available_variant = v1_product.selected_or_first_available_variant -%}
 
-        {%- form 'product', v1_product, id: 'landing-product-form', novalidate: true, data-product-id: v1_product.id -%}
+          {%- form 'product'
+            , v1_product
+            , id: 'landing-product-form'
+            , novalidate: true
+            , data-product-id: v1_product.id -%}
           {% comment %}
             ── NO-JS FALLBACK SELECT ──
             This <select> is the source of truth for the form's variant ID.
@@ -101,14 +106,18 @@
             The form always submits name="id" — Shopify requires this.
           {% endcomment %}
 
-          <select name="id" id="variant-select" style="display:none;" aria-hidden="true" tabindex="-1">
+          <select
+            name="id"
+            id="variant-select"
+            style="display:none;"
+            aria-hidden="true"
+            tabindex="-1">
             {%- for variant in v1_product.variants -%}
               <option
                 value="{{ variant.id }}"
                 {%- if variant == first_available_variant %}
-                  selected
-                {%- endif -%}
-              >
+                selected
+                {%- endif -%}>
                 {{ variant.title }}
               </option>
             {%- endfor -%}
@@ -121,20 +130,21 @@
           <div
             class="pricing-grid js-pricing-grid"
             role="radiogroup"
-            aria-label="Select product size"
-          >
+            aria-label="Select product size">
             {%- for variant in v1_product.variants -%}
               {% comment %}
                 ── BADGE LOGIC VIA METAFIELD ──
-                Reads variant metafield: custom.badge (single_line_text_field)
+                Reads variant metafield: custom.vizionone_badge (single_line_text_field)
                 If the metafield is not set, no badge renders.
-                Featured card styling triggers when badge contains "MOST POPULAR".
+                Badge text comes from Shopify Admin.
+                Styling stays aligned with the original card design.
                 This is fully decoupled from variant.title — rename-safe.
               {% endcomment %}
-              {%- assign v1_badge_value = variant.metafields.custom.badge.value | default: '' -%}
+              {%- assign v1_badge_value = variant.metafields.custom.vizionone_badge.value | default: '' | strip -%}
+              {%- assign v1_badge_value_normalized = v1_badge_value | downcase -%}
               {%- assign v1_badge_class = 'pricing-badge--alt' -%}
 
-              {%- if forloop.last -%}
+              {%- if v1_badge_value_normalized contains 'shop' -%}
                 {%- assign v1_badge_class = 'pricing-badge--shop' -%}
               {%- endif -%}
 
@@ -146,15 +156,15 @@
               <div
                 class="pricing-card js-variant-card {%- if v1_is_first_available %} is-selected{%- endif -%}"
                 data-variant-id="{{ variant.id }}"
+                data-variant-url="{{ variant.url | escape }}"
                 data-available="{{ variant.available }}"
                 role="radio"
                 aria-checked="{%- if v1_is_first_available -%}true{%- else -%}false{%- endif -%}"
                 aria-label="{{ variant.title }}, {{ variant.price | money }}{%- unless variant.available %}, sold out{%- endunless -%}"
-                tabindex="0"
-              >
+                tabindex="0">
                 {%- if v1_badge_value != blank -%}
-                  <span class="pricing-badge {{ v1_badge_class }}" aria-label="{{ v1_badge_value }}">
-                    {{ v1_badge_value | upcase -}}
+                  <span class="pricing-badge {{ v1_badge_class }}" aria-label="{{ v1_badge_value | escape }}">
+                    {{ v1_badge_value | upcase | escape -}}
                   </span>
                 {%- endif -%}
 
@@ -162,13 +172,13 @@
 
                 {%- comment -%}
                   Per-variant description is stored in a second metafield:
-                  Namespace: custom | Key: description
+                  Namespace: custom | Key: vizionone_card_desc
                   Set it the same way as the badge metafield.
                   Falls back gracefully to empty string — no card is broken.
                 {%- endcomment -%}
-                {%- assign v1_card_desc = variant.metafields.custom.description.value | default: '' -%}
+                {%- assign v1_card_desc = variant.metafields.custom.vizionone_card_desc.value | default: '' | strip -%}
                 {%- if v1_card_desc != blank -%}
-                  <p class="pricing-card__desc">{{ v1_card_desc }}</p>
+                  <p class="pricing-card__desc">{{ v1_card_desc | escape }}</p>
                 {%- else -%}
                   <p class="pricing-card__desc pricing-card__desc--empty" aria-hidden="true"></p>
                 {%- endif -%}
@@ -191,8 +201,7 @@
               data-add-to-cart-button
               class="btn btn--red btn--lg btn--full pricing-submit"
               aria-label="Add selected size to cart"
-              aria-live="polite"
-            >
+              aria-live="polite">
               ADD TO CART
             </button>
 
@@ -204,21 +213,20 @@
               role="alert"
               aria-live="assertive"
               aria-atomic="true"
-              hidden
-            ></div>
-             {% render 'trust-badges',
-            secure_icon: section.settings.trust_icon_secure,
-            usa_icon: section.settings.trust_icon_usa,
-            ships_icon: section.settings.trust_icon_ships,
-            satisfaction_icon: section.settings.trust_icon_satisfaction,
-            secure_text: section.settings.trust_text_secure,
-            usa_text: section.settings.trust_text_usa,
-            ships_text: section.settings.trust_text_ships,
-            satisfaction_text: section.settings.trust_text_satisfaction,
-            icon_size: section.settings.trust_icon_size
-          %}
+              hidden></div>
+            {% render 'trust-badges'
+              , secure_icon: section.settings.trust_icon_secure
+              , usa_icon: section.settings.trust_icon_usa
+              , ships_icon: section.settings.trust_icon_ships
+              , satisfaction_icon: section.settings.trust_icon_satisfaction
+              , secure_text: section.settings.trust_text_secure
+              , usa_text: section.settings.trust_text_usa
+              , ships_text: section.settings.trust_text_ships
+              , satisfaction_text: section.settings.trust_text_satisfaction
+              , icon_size: section.settings.trust_icon_size
+            %}
           </div>
-         
+
         {%- endform -%}
 
       {%- else -%}
@@ -231,7 +239,7 @@
           <p>
             <strong>Developer notice:</strong>
             Product not found. The product handle set in this section's settings is
-            <code>{{ v1_product_handle }}</code>. Verify this matches your product handle exactly in Shopify Admin →
+            <code>{{ v1_product_handle }}</code>. Verify this matches your product handle exactly in Shopify Admin → 
             Products → [Product] → Search engine listing.
           </p>
         </div>
@@ -243,96 +251,89 @@
 </div>
 
 {% schema %}
-{
-  "name": "Pricing Section",
-  "settings": [
-    {
-      "type": "text",
-      "id": "product_handle",
-      "label": "Product handle",
-      "info": "Must match the product handle in Shopify Admin exactly. Find it under Products → [Product] → Search engine listing preview.",
-      "default": "vizionone-professional-hand-cleaner"
-    },
-    {
-      "type": "text",
-      "id": "headline",
-      "label": "Section headline",
-      "default": "CHOOSE YOUR SIZE. ORDER TODAY."
-    },
-    {
-      "type": "text",
-      "id": "subheadline",
-      "label": "Sub-headline",
-      "default": "Tax and shipping calculated at checkout. Ships from Greater Houston, TX."
-    },
-    {
-      "type": "text",
-      "id": "helper_text",
-      "label": "Helper text (shown above size cards)",
-      "default": "Most individuals order the 32 oz. Shops order the Gallon or 12-Pack."
-    },
-    {
-      "type": "header",
-      "content": "Trust Badge Icons"
-    },
-    {
-      "type": "image_picker",
-      "id": "trust_icon_secure",
-      "label": "Secure Checkout Icon"
-    },
-    {
-      "type": "image_picker",
-      "id": "trust_icon_usa",
-      "label": "Made in USA Icon"
-    },
-    {
-      "type": "image_picker",
-      "id": "trust_icon_ships",
-      "label": "Ships Nationwide Icon"
-    },
-    {
-      "type": "image_picker",
-      "id": "trust_icon_satisfaction",
-      "label": "100% Satisfaction Icon"
-    },
-    {
-      "type": "range",
-      "id": "trust_icon_size",
-      "label": "Icon Size (px)",
-      "min": 20,
-      "max": 120,
-      "step": 4,
-      "default": 40
-    },
-    {
-      "type": "header",
-      "content": "Trust Badge Labels"
-    },
-    {
-      "type": "text",
-      "id": "trust_text_secure",
-      "label": "Secure Checkout label",
-      "default": "Secure Checkout"
-    },
-    {
-      "type": "text",
-      "id": "trust_text_usa",
-      "label": "Made in USA label",
-      "default": "Made in USA"
-    },
-    {
-      "type": "text",
-      "id": "trust_text_ships",
-      "label": "Ships Nationwide label",
-      "default": "Ships Nationwide"
-    },
-    {
-      "type": "text",
-      "id": "trust_text_satisfaction",
-      "label": "100% Satisfaction label",
-      "default": "100% Satisfaction"
-    }
-  ],
-  "presets": [{ "name": "Pricing section" }]
-}
+  {
+    "name": "Pricing Section",
+    "settings": [
+      {
+        "type": "text",
+        "id": "product_handle",
+        "label": "Product handle",
+        "info": "Must match the product handle in Shopify Admin exactly. Find it under Products → [Product] → Search engine listing preview.",
+        "default": "vizionone-professional-hand-cleaner"
+      },
+      {
+        "type": "text",
+        "id": "headline",
+        "label": "Section headline",
+        "default": "CHOOSE YOUR SIZE. ORDER TODAY."
+      },
+      {
+        "type": "text",
+        "id": "subheadline",
+        "label": "Sub-headline",
+        "default": "Tax and shipping calculated at checkout. Ships from Greater Houston, TX."
+      },
+      {
+        "type": "text",
+        "id": "helper_text",
+        "label": "Helper text (shown above size cards)",
+        "default": "Most individuals order the 32 oz. Shops order the Gallon or 12-Pack."
+      }, {
+        "type": "header",
+        "content": "Trust Badge Icons"
+      }, {
+        "type": "image_picker",
+        "id": "trust_icon_secure",
+        "label": "Secure Checkout Icon"
+      }, {
+        "type": "image_picker",
+        "id": "trust_icon_usa",
+        "label": "Made in USA Icon"
+      }, {
+        "type": "image_picker",
+        "id": "trust_icon_ships",
+        "label": "Ships Nationwide Icon"
+      }, {
+        "type": "image_picker",
+        "id": "trust_icon_satisfaction",
+        "label": "100% Satisfaction Icon"
+      }, {
+        "type": "range",
+        "id": "trust_icon_size",
+        "label": "Icon Size (px)",
+        "min": 20,
+        "max": 120,
+        "step": 4,
+        "default": 40
+      }, {
+        "type": "header",
+        "content": "Trust Badge Labels"
+      }, {
+        "type": "text",
+        "id": "trust_text_secure",
+        "label": "Secure Checkout label",
+        "default": "Secure Checkout"
+      }, {
+        "type": "text",
+        "id": "trust_text_usa",
+        "label": "Made in USA label",
+        "default": "Made in USA"
+      }, {
+        "type": "text",
+        "id": "trust_text_ships",
+        "label": "Ships Nationwide label",
+        "default": "Ships Nationwide"
+      }, {
+        "type": "text",
+        "id": "trust_text_satisfaction",
+        "label": "100% Satisfaction label",
+        "default": "100% Satisfaction"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Pricing section"
+      }
+    ]
+  }
 {% endschema %}

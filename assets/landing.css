@@ -135,22 +135,23 @@ button {
    ============================================================ */
 
 .btn {
-    display: inline-block;
-    font-family: Oswald,sans-serif;
-    font-weight: 700;
-    font-size: 1rem;
-    letter-spacing: .08em;
-    text-transform: uppercase;
-    padding: 1.125rem 3rem;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-    text-align: center;
-    text-decoration: none;
-    transition: background-color .15s ease,transform .1s ease;
-    -webkit-appearance: none;
-    appearance: none;
-    line-height: 1;
+  display: inline-block;
+  font-family: Oswald, sans-serif;
+  font-weight: 700;
+  font-size: 1.563rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 1.125rem 3rem;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  transition:
+    background-color 0.15s ease,
+    transform 0.1s ease;
+  -webkit-appearance: none;
+  appearance: none;
+  line-height: 1;
 }
 
 .btn--red {
@@ -169,13 +170,14 @@ button {
 }
 
 .btn--lg {
-  font-size: 1.125rem;
+  font-size: 1.563rem;
   padding: 1.125rem 3rem;
 }
 
 .btn--full {
-  width: 100%;
+  width: 40%;
   display: block;
+  margin: 0 auto;
 }
 
 .btn:disabled,
@@ -248,6 +250,11 @@ button {
   z-index: 100;
 }
 
+img.header-flag-icon {
+  height: 32px;
+  width: 32px;
+}
+
 .site-header__inner {
   max-width: 1200px;
   margin: 0 auto;
@@ -260,6 +267,13 @@ button {
 }
 
 /* Logo */
+
+.site-header__logo {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
 .site-header__logo {
   flex-shrink: 0;
 }
@@ -324,7 +338,7 @@ button {
 }
 
 .site-header__cart {
-  width: 56px;
+  width: 38px;
   height: 33px;
   display: inline-flex;
   align-items: center;
@@ -357,7 +371,9 @@ button {
 .section-problem__img,
 .section-intro__img,
 .section-ingredients__img {
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
   will-change: transform;
 }
 
@@ -975,18 +991,18 @@ body.is-locked {
 }
 
 .benefit-item__label {
-  font-family: "Oswald", sans-serif;
-  font-size: 0.75rem;
+  font-family: Oswald, sans-serif;
+  font-size: 1rem;
   font-weight: 600;
   letter-spacing: 0.15em;
-  color: #cc0000;
+  color: #c00;
   text-transform: uppercase;
   margin-bottom: 0.375rem;
 }
 
 .benefit-item__desc {
-  color: #888888;
-  font-size: 0.8125rem;
+  color: #888;
+  font-size: 0.938rem;
   line-height: 1.4;
 }
 
@@ -1355,6 +1371,12 @@ body.is-locked {
   }
 }
 
+@media (max-width: 637px) {
+  .btn--full {
+    width: 100%;
+  }
+}
+
 @media (min-width: 1024px) {
   .pricing-grid {
     grid-template-columns: repeat(5, 1fr);
@@ -1428,11 +1450,14 @@ body.is-locked {
 }
 
 .pricing-card__title {
-  font-family: "Bebas Neue", sans-serif;
+  font-family:
+    Bebas Neue,
+    sans-serif;
   font-size: 1.625rem;
   color: #e8e8e8;
   margin: 2rem 0 0.375rem;
   line-height: 1;
+  letter-spacing: 2.05px;
 }
 
 .pricing-card__desc {
@@ -1473,7 +1498,7 @@ body.is-locked {
 }
 
 .pricing-submit {
-  font-size: 1.125rem;
+  font-size: 1.563rem;
   padding: 1.125rem 2rem;
   margin-bottom: 1.5rem;
 }
@@ -1495,24 +1520,22 @@ body.is-locked {
    13. TRUST BADGES SNIPPET
    ============================================================ */
 
-
 .trust-badges {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 1.25rem;
-    flex-wrap: wrap;
-    padding-top: 1.25rem;
-    border-top: 1px solid #222222;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  padding-top: 2.25rem;
+  border-top: 1px solid #222222;
 }
-
 
 .trust-badge {
   display: flex;
   align-items: center;
   gap: 0.375rem;
   font-family: "Oswald", sans-serif;
-  font-size: 0.75rem;
+  font-size: 1rem;
   font-weight: 500;
   letter-spacing: 0.08em;
   color: #888888;
@@ -1945,7 +1968,7 @@ body.is-locked {
 
 .section-final-cta__inner {
   text-align: center;
-  max-width: 760px;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
@@ -1979,6 +2002,33 @@ body.is-locked {
   background-color: #000000;
 }
 
+img.footer-flag-icon {
+  height: 29px;
+  width: 29px;
+}
+
+.footer-policy-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  font-family: "Oswald", sans-serif;
+}
+
+.footer-policy-list {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.625rem;
+  margin: 0;
+  padding: 0;
+}
+
+.footer-policy-list .site-footer__link {
+  display: block;
+  width: auto;
+}
+
 .site-footer__top-border {
   height: 3px;
   background-color: #cc0000;
@@ -2009,22 +2059,24 @@ body.is-locked {
   font-size: 1.5rem;
   letter-spacing: 0.08em;
   color: #e8e8e8;
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  gap: 7px;
   margin-bottom: 0.375rem;
 }
 
 .site-footer__tagline {
-  font-family: "Oswald", sans-serif;
-  font-size: 0.6875rem;
+  font-family: Oswald, sans-serif;
+  font-size: 13px;
   letter-spacing: 0.2em;
-  color: #555555;
+  color: #555;
   text-transform: uppercase;
   margin-bottom: 0.5rem;
 }
 
 .site-footer__location,
 .site-footer__url {
-  font-size: 0.8125rem;
+  font-size: 13px;
   color: #444444;
 }
 

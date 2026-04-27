@@ -1,0 +1,417 @@
+{% assign privacy_policy = shop.privacy_policy %}
+{% assign shipping_policy = shop.shipping_policy %}
+{% assign refund_policy = shop.refund_policy %}
+{% assign terms_policy = shop.terms_of_service %}
+
+<div class="footer-policy-block">
+  <ul class="sf__footer-block-content m-footer--block-content list-unstyled m-link-lists footer-policy-list">
+    {% if privacy_policy != blank %}
+      <li class="link-lv2 m-link-lists--item m:block leading-8 hover-underline site-footer__link">
+        <a
+          href="{{ privacy_policy.url }}"
+          class="m-link policy-modal-trigger"
+          data-policy-url="{{ privacy_policy.url }}"
+          data-policy-title="{{ privacy_policy.title | escape }}"
+          data-policy-template-id="policy-template-privacy"
+        >
+          {{ privacy_policy.title }}
+        </a>
+      </li>
+    {% endif %}
+
+    {% if shipping_policy != blank or refund_policy != blank %}
+      <li class="link-lv2 m-link-lists--item m:block leading-8 hover-underline site-footer__link">
+        <a
+          href="{{ shipping_policy.url | default: refund_policy.url }}"
+          class="m-link policy-modal-trigger"
+          data-policy-url="{{ shipping_policy.url | default: refund_policy.url }}"
+          data-policy-title="Shipping & Refund Policy"
+          data-policy-template-id="policy-template-shipping-refund"
+        >
+          Shipping & Refund Policy
+        </a>
+      </li>
+    {% endif %}
+
+    {% if terms_policy != blank %}
+      <li class="link-lv2 m-link-lists--item m:block leading-8 hover-underline site-footer__link">
+        <a
+          href="{{ terms_policy.url }}"
+          class="m-link policy-modal-trigger"
+          data-policy-url="{{ terms_policy.url }}"
+          data-policy-title="{{ terms_policy.title | escape }}"
+          data-policy-template-id="policy-template-terms"
+        >
+          {{ terms_policy.title }}
+        </a>
+      </li>
+    {% endif %}
+  </ul>
+
+  {% if privacy_policy != blank %}
+    <template id="policy-template-privacy">
+      <section class="policy-modal-section">
+        {{ privacy_policy.body }}
+      </section>
+    </template>
+  {% endif %}
+
+  {% if shipping_policy != blank or refund_policy != blank %}
+    <template id="policy-template-shipping-refund">
+      {% if shipping_policy != blank %}
+        <section class="policy-modal-section">
+          <h2>{{ shipping_policy.title }}</h2>
+          {{ shipping_policy.body }}
+        </section>
+      {% endif %}
+      {% if refund_policy != blank %}
+        <section class="policy-modal-section">
+          <h2>{{ refund_policy.title }}</h2>
+          {{ refund_policy.body }}
+        </section>
+      {% endif %}
+    </template>
+  {% endif %}
+
+  {% if terms_policy != blank %}
+    <template id="policy-template-terms">
+      <section class="policy-modal-section">
+        {{ terms_policy.body }}
+      </section>
+    </template>
+  {% endif %}
+</div>
+
+<script>
+  (function () {
+    'use strict';
+
+    if (window.__policyModalInitialized) {
+      return;
+    }
+    window.__policyModalInitialized = true;
+
+    var MODAL_OVERLAY_ID = 'policy-modal-overlay';
+    var MODAL_BODY_ID = 'policy-modal-body';
+    var MODAL_TITLE_ID = 'policy-modal-title';
+    var MODAL_CLOSE_ID = 'policy-modal-close';
+    var previousActiveElement = null;
+
+    function ensureModal() {
+      if (document.getElementById(MODAL_OVERLAY_ID)) {
+        return;
+      }
+
+      document.body.insertAdjacentHTML(
+        'beforeend',
+        [
+          '<style>',
+          '  #' + MODAL_OVERLAY_ID + ' {',
+          '    display: none;',
+          '    position: fixed;',
+          '    inset: 0;',
+          '    z-index: 2147483647;',
+          '    align-items: center;',
+          '    justify-content: center;',
+          '    padding: 24px;',
+          '    background: rgba(0, 0, 0, 0.78);',
+          '    backdrop-filter: blur(3px);',
+          '  }',
+          '  #policy-modal-box {',
+          '    background: #000000;',
+          '    color: #ffffff;',
+          '    width: min(920px, 100%);',
+          '    min-height: 55vh;',
+          '    max-height: 80vh;',
+          '    border: 1px solid #ff0404;',
+          '    border-radius: 12px;',
+          '    display: flex;',
+          '    flex-direction: column;',
+          '    overflow: hidden;',
+          '    box-shadow: 0 32px 80px rgba(0, 0, 0, 0.6);',
+          '  }',
+          '  #policy-modal-header {',
+          '    display: flex;',
+          '    align-items: center;',
+          '    justify-content: space-between;',
+          '    gap: 16px;',
+          '    padding: 22px 32px;',
+          '    border-bottom: 1px solid #ff0404;',
+          '    flex-shrink: 0;',
+          '  }',
+          '  #' + MODAL_TITLE_ID + ' {',
+          '    margin: 0;',
+          '    font-family: "Oswald", sans-serif;',
+          '    font-size: 1.1rem;',
+          '    letter-spacing: 0.08em;',
+          '    text-transform: uppercase;',
+          '    color: #ffffff;',
+          '  }',
+          '  #' + MODAL_CLOSE_ID + ' {',
+          '    width: 40px;',
+          '    height: 40px;',
+          '    display: inline-flex;',
+          '    align-items: center;',
+          '    justify-content: center;',
+          '    border: 1px solid #ff0404;',
+          '    border-radius: 6px;',
+          '    background: transparent;',
+          '    color: #ff0404;',
+          '    cursor: pointer;',
+          '  }',
+          '  #' + MODAL_CLOSE_ID + ':hover,',
+          '  #' + MODAL_CLOSE_ID + ':focus-visible {',
+          '    border-color: #ff0404;',
+          '    background: #111111;',
+          '  }',
+          '  #' + MODAL_BODY_ID + ' {',
+          '    overflow-y: auto;',
+          '    padding: 32px;',
+          '    flex: 1;',
+          '    color: #d0d0d0;',
+          '    font-size: 0.95rem;',
+          '    line-height: 1.8;',
+          '  }',
+          '  #' + MODAL_BODY_ID + ' a { color: #ff0404; }',
+          '  #' + MODAL_BODY_ID + ' button,',
+          '  #' + MODAL_BODY_ID + ' input[type="button"],',
+          '  #' + MODAL_BODY_ID + ' input[type="submit"] {',
+          '    border: 1px solid #ff0404;',
+          '  }',
+          '  #' + MODAL_BODY_ID + ' h1,',
+          '  #' + MODAL_BODY_ID + ' h2,',
+          '  #' + MODAL_BODY_ID + ' h3,',
+          '  #' + MODAL_BODY_ID + ' h4,',
+          '  #' + MODAL_BODY_ID + ' h5,',
+          '  #' + MODAL_BODY_ID + ' h6 {',
+          '    color: #ffffff;',
+          '    line-height: 1.3;',
+          '    margin: 0 0 1rem;',
+          '  }',
+          '  #' + MODAL_BODY_ID + ' p,',
+          '  #' + MODAL_BODY_ID + ' ul,',
+          '  #' + MODAL_BODY_ID + ' ol,',
+          '  #' + MODAL_BODY_ID + ' table,',
+          '  #' + MODAL_BODY_ID + ' blockquote {',
+          '    margin: 0 0 1rem;',
+          '  }',
+          '  #' + MODAL_BODY_ID + ' ul,',
+          '  #' + MODAL_BODY_ID + ' ol {',
+          '    padding-left: 1.25rem;',
+          '  }',
+          '  #' + MODAL_BODY_ID + ' .policy-modal-section + .policy-modal-section {',
+          '    margin-top: 2rem;',
+          '    padding-top: 2rem;',
+          '    border-top: 1px solid #2a2a2a;',
+          '  }',
+          '  #' + MODAL_BODY_ID + ' img {',
+          '    max-width: 100%;',
+          '    height: auto;',
+          '  }',
+          '  #' + MODAL_BODY_ID + '::-webkit-scrollbar { width: 6px; }',
+          '  #' + MODAL_BODY_ID + '::-webkit-scrollbar-track { background: #111111; }',
+          '  #' + MODAL_BODY_ID + '::-webkit-scrollbar-thumb { background: #333333; border-radius: 999px; }',
+          '  @media (max-width: 768px) {',
+          '    #' + MODAL_OVERLAY_ID + ' { padding: 12px; }',
+          '    #policy-modal-box { min-height: 65vh; max-height: 90vh; border-radius: 8px; }',
+          '    #policy-modal-header { padding: 16px 18px; }',
+          '    #' + MODAL_BODY_ID + ' { padding: 24px 18px; }',
+          '  }',
+          '</style>',
+          '<div id="' + MODAL_OVERLAY_ID + '" role="dialog" aria-modal="true" aria-labelledby="' + MODAL_TITLE_ID + '" hidden>',
+          '  <div id="policy-modal-box">',
+          '    <div id="policy-modal-header">',
+          '      <h2 id="' + MODAL_TITLE_ID + '"></h2>',
+          '      <button id="' + MODAL_CLOSE_ID + '" type="button" aria-label="Close modal">',
+          '        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">',
+          '          <line x1="18" y1="6" x2="6" y2="18"></line>',
+          '          <line x1="6" y1="6" x2="18" y2="18"></line>',
+          '        </svg>',
+          '      </button>',
+          '    </div>',
+          '    <div id="' + MODAL_BODY_ID + '" data-lenis-prevent></div>',
+          '  </div>',
+          '</div>'
+        ].join('')
+      );
+    }
+
+    function getModalElement(id) {
+      ensureModal();
+      return document.getElementById(id);
+    }
+
+    function extractContent(doc) {
+      return (
+        doc.querySelector('.shopify-policy__container') ||
+        doc.querySelector('.shopify-policy__body') ||
+        doc.querySelector('.policy__body') ||
+        doc.querySelector('main .rte') ||
+        doc.querySelector('.rte') ||
+        doc.querySelector('main') ||
+        doc.querySelector('article') ||
+        doc.body
+      );
+    }
+
+    function isMissingPage(doc, responseUrl) {
+      var heading = doc.querySelector('h1');
+      var title = doc.querySelector('title');
+      var canonical404 = doc.querySelector('meta[property="og:url"][content*="/404"]');
+      var headingText = heading ? heading.textContent.trim().toLowerCase() : '';
+      var titleText = title ? title.textContent.trim().toLowerCase() : '';
+      var finalUrl = String(responseUrl || '').toLowerCase();
+
+      return (
+        finalUrl.indexOf('/404') !== -1 ||
+        !!canonical404 ||
+        headingText === 'page not found' ||
+        titleText === 'page not found'
+      );
+    }
+
+    function setLoadingState() {
+      var bodyEl = getModalElement(MODAL_BODY_ID);
+      bodyEl.innerHTML = '<p style="text-align:center;padding:60px 0;color:#888888;">Loading...</p>';
+    }
+
+    function loadTemplateContent(templateId, fallbackTitle) {
+      var template = templateId ? document.getElementById(templateId) : null;
+      var bodyEl = getModalElement(MODAL_BODY_ID);
+
+      if (!template || !template.innerHTML.trim()) {
+        return false;
+      }
+
+      getModalElement(MODAL_TITLE_ID).textContent = fallbackTitle || '';
+      bodyEl.innerHTML = template.innerHTML;
+      return true;
+    }
+
+    function openModal(title) {
+      var overlay = getModalElement(MODAL_OVERLAY_ID);
+      var titleEl = getModalElement(MODAL_TITLE_ID);
+
+      previousActiveElement = document.activeElement;
+      titleEl.textContent = title || '';
+      overlay.hidden = false;
+      overlay.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+      getModalElement(MODAL_CLOSE_ID).focus();
+    }
+
+    function closeModal() {
+      var overlay = getModalElement(MODAL_OVERLAY_ID);
+      var bodyEl = getModalElement(MODAL_BODY_ID);
+      var titleEl = getModalElement(MODAL_TITLE_ID);
+
+      overlay.hidden = true;
+      overlay.style.display = 'none';
+      bodyEl.innerHTML = '';
+      titleEl.textContent = '';
+      document.body.style.overflow = '';
+
+      if (previousActiveElement && typeof previousActiveElement.focus === 'function') {
+        previousActiveElement.focus();
+      }
+      previousActiveElement = null;
+    }
+
+    function loadPolicyContent(url, fallbackTitle) {
+      var bodyEl = getModalElement(MODAL_BODY_ID);
+
+      fetch(url, {
+        method: 'GET',
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest'
+        }
+      })
+        .then(function (response) {
+          if (!response.ok) {
+            throw new Error('Page not found: ' + response.status);
+          }
+          return response.text().then(function (html) {
+            return {
+              html: html,
+              responseUrl: response.url || url
+            };
+          });
+        })
+        .then(function (result) {
+          var parser = new DOMParser();
+          var parsedDoc = parser.parseFromString(result.html, 'text/html');
+          var content = extractContent(parsedDoc);
+          var pageTitle =
+            parsedDoc.querySelector('h1') ||
+            parsedDoc.querySelector('.shopify-policy__title') ||
+            parsedDoc.querySelector('title');
+
+          if (isMissingPage(parsedDoc, result.responseUrl)) {
+            bodyEl.innerHTML = [
+              '<p style="color:#ff0404;text-align:center;">',
+              '  This page is not available yet.<br>',
+              '  Please create or publish the policy page for this link.',
+              '</p>'
+            ].join('');
+            return;
+          }
+
+          if (pageTitle) {
+            getModalElement(MODAL_TITLE_ID).textContent = pageTitle.textContent.trim() || fallbackTitle;
+          }
+
+          bodyEl.innerHTML = content
+            ? content.innerHTML
+            : '<p style="color:#888888;text-align:center;">Could not load content.</p>';
+        })
+        .catch(function () {
+          bodyEl.innerHTML = [
+            '<p style="color:#ff0404;text-align:center;">',
+            '  Could not load this page.<br>',
+            '  <a href="' + url + '" target="_blank" rel="noopener noreferrer" style="color:#ff0404;text-decoration:underline;">',
+            '    Open directly',
+            '  </a>',
+            '</p>'
+          ].join('');
+        });
+    }
+
+    document.addEventListener('click', function (event) {
+      var trigger = event.target.closest('.policy-modal-trigger');
+      var overlay = document.getElementById(MODAL_OVERLAY_ID);
+      var closeButton = document.getElementById(MODAL_CLOSE_ID);
+
+      if (trigger) {
+        event.preventDefault();
+        openModal(trigger.getAttribute('data-policy-title'));
+        if (
+          !loadTemplateContent(
+            trigger.getAttribute('data-policy-template-id'),
+            trigger.getAttribute('data-policy-title') || trigger.textContent.trim()
+          )
+        ) {
+          setLoadingState();
+          loadPolicyContent(
+            trigger.getAttribute('data-policy-url') || trigger.getAttribute('href'),
+            trigger.getAttribute('data-policy-title') || trigger.textContent.trim()
+          );
+        }
+        return;
+      }
+
+      if (!overlay || overlay.hidden) {
+        return;
+      }
+
+      if (event.target === overlay || (closeButton && closeButton.contains(event.target))) {
+        closeModal();
+      }
+    });
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && !getModalElement(MODAL_OVERLAY_ID).hidden) {
+        closeModal();
+      }
+    });
+  })();
+</script>

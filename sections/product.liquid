@@ -20,6 +20,16 @@
 <div class="product-form">
   {% form 'product', product %}
     {% assign current_variant = product.selected_or_first_available_variant %}
+    {% assign current_variant_badge = current_variant.metafields.custom.vizionone_badge.value | default: '' | strip %}
+    {% assign current_variant_card_desc = current_variant.metafields.custom.vizionone_card_desc.value | default: '' | strip %}
+
+    <div
+      hidden
+      data-selected-variant-card-copy
+      data-variant-id="{{ current_variant.id }}"
+      data-badge="{{ current_variant_badge | escape }}"
+      data-card-desc="{{ current_variant_card_desc | escape }}"
+    ></div>
 
     <select name="id">
       {% for variant in product.variants %}

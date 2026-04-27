@@ -82,6 +82,16 @@ window.__v1LandingInitialized = true;
     });
   }
 
+  function requestText(url, options, fallbackMessage) {
+    return fetchWithTimeout(url, options).then(function (response) {
+      if (response.ok) {
+        return response.text();
+      }
+
+      throw new Error(fallbackMessage);
+    });
+  }
+
   function escapeHtml(value) {
     return String(value || '')
       .replace(/&/g, '&amp;')
@@ -374,6 +384,122 @@ window.__v1LandingInitialized = true;
     target.hidden = true;
   }
 
+  function getPricingBadgeClass(badgeText) {
+    var normalized = String(badgeText || '').toLowerCase();
+
+    if (normalized.indexOf('shop') !== -1) {
+      return 'pricing-badge--shop';
+    }
+
+    return 'pricing-badge--alt';
+  }
+
+  function setPricingCardBadge(card, badgeText) {
+    var title = card.querySelector('.pricing-card__title');
+    var badge = card.querySelector('.pricing-badge');
+    var cleanBadgeText = String(badgeText || '').trim();
+
+    if (!title) return;
+
+    if (!cleanBadgeText) {
+      if (badge) {
+        badge.remove();
+      }
+      return;
+    }
+
+    if (!badge) {
+      badge = doc.createElement('span');
+      title.parentNode.insertBefore(badge, title);
+    }
+
+    badge.className = 'pricing-badge ' + getPricingBadgeClass(cleanBadgeText);
+    badge.setAttribute('aria-label', cleanBadgeText);
+    badge.textContent = cleanBadgeText.toUpperCase();
+  }
+
+  function setPricingCardDescription(card, descriptionText) {
+    var desc = card.querySelector('.pricing-card__desc');
+    var cleanDescription = String(descriptionText || '').trim();
+
+    if (!desc) return;
+
+    if (cleanDescription) {
+      desc.textContent = cleanDescription;
+      desc.classList.remove('pricing-card__desc--empty');
+      desc.removeAttribute('aria-hidden');
+      return;
+    }
+
+    desc.textContent = '';
+    desc.classList.add('pricing-card__desc--empty');
+    desc.setAttribute('aria-hidden', 'true');
+  }
+
+  function hydratePricingCardMetafields() {
+    var parser;
+    var requestsByUrl = {};
+
+    if (typeof fetch !== 'function' || typeof DOMParser !== 'function') {
+      return;
+    }
+
+    parser = new DOMParser();
+
+    doc.querySelectorAll('.js-variant-card').forEach(function (card) {
+      var badge = card.querySelector('.pricing-badge');
+      var desc = card.querySelector('.pricing-card__desc');
+      var hasBadge = !!(badge && badge.textContent.trim());
+      var hasDescription = !!(desc && desc.textContent.trim());
+      var variantUrl = card.getAttribute('data-variant-url');
+      var fetchUrl;
+
+      if ((hasBadge && hasDescription) || !variantUrl) {
+        return;
+      }
+
+      fetchUrl = variantUrl + (variantUrl.indexOf('?') === -1 ? '?' : '&') + 'section_id=main';
+
+      if (!requestsByUrl[fetchUrl]) {
+        requestsByUrl[fetchUrl] = requestText(
+          fetchUrl,
+          {
+            method: 'GET',
+            headers: {
+              'X-Requested-With': 'XMLHttpRequest'
+            }
+          },
+          'Unable to load variant details.'
+        )
+          .then(function (html) {
+            var parsed = parser.parseFromString(html, 'text/html');
+            var payload = parsed.querySelector('[data-selected-variant-card-copy]');
+
+            return {
+              badge: payload ? payload.getAttribute('data-badge') || '' : '',
+              cardDesc: payload ? payload.getAttribute('data-card-desc') || '' : ''
+            };
+          })
+          .catch(function () {
+            return {
+              badge: '',
+              cardDesc: ''
+            };
+          });
+      }
+
+      requestsByUrl[fetchUrl].then(function (copy) {
+        if (!hasBadge) {
+          setPricingCardBadge(card, copy.badge);
+        }
+
+        if (!hasDescription) {
+          setPricingCardDescription(card, copy.cardDesc);
+        }
+      });
+    });
+  }
+
   /* ============================================================
      1. No-JS activation
   ============================================================ */
@@ -386,6 +512,8 @@ window.__v1LandingInitialized = true;
     selectWrap.setAttribute('aria-hidden', 'true');
     selectWrap.style.cssText = 'position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0';
   });
+
+  hydratePricingCardMetafields();
 
   /* ============================================================
      2. Variant card selection
@@ -771,5 +899,7 @@ document.addEventListener('shopify:section:load', function () {
     selectWrap.setAttribute('aria-hidden', 'true');
     selectWrap.style.cssText = 'position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0';
   });
+
+  hydratePricingCardMetafields();
 });
 })();

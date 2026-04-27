@@ -10,7 +10,16 @@
 
     {% comment %} BRAND COLUMN {% endcomment %}
     <div class="site-footer__brand">
-      <a href="{{ routes.root_url }}" class="site-footer__logo" aria-label="VizionOne Home">
+      <a
+        href="{{ routes.root_url }}"
+        class="site-footer__logo"
+        aria-label="VizionOne Home">
+        <img
+          class="footer-flag-icon"
+          src="{{ 'flag.png' | asset_url }}"
+          width="28"
+          height="28"
+          alt="Flag">
         VIZION<span class="text-red">ONE</span>
       </a>
       <p class="site-footer__tagline">PROFESSIONAL HAND CLEANER</p>
@@ -32,36 +41,7 @@
 
     {% comment %} LEGAL COLUMN {% endcomment %}
     <nav class="site-footer__legal" aria-label="Footer legal links">
-      {% if section.settings.legal_menu != blank and section.settings.legal_menu.links.size > 0 %}
-        {% for link in section.settings.legal_menu.links %}
-          <a
-            href="{{ link.url }}"
-            class="site-footer__link"
-            {% if link.current %}
-              aria-current="page"
-            {% endif %}
-          >
-            {{ link.title }}
-          </a>
-        {% endfor %}
-      {% else %}
-        {% comment %}
-          Shopify policy pages are accessible via shop.privacy_policy, shop.terms_of_service, shop.refund_policy.
-          These are only available if policies are set in Shopify Admin -> Settings -> Policies.
-        {% endcomment %}
-        {% if shop.privacy_policy.url %}
-          <a href="{{ shop.privacy_policy.url }}" class="site-footer__link">Privacy Policy</a>
-        {% endif %}
-        {% if shop.terms_of_service.url %}
-          <a href="{{ shop.terms_of_service.url }}" class="site-footer__link">Terms of Service</a>
-        {% endif %}
-        {% if shop.refund_policy.url %}
-          <a href="{{ shop.refund_policy.url }}" class="site-footer__link">Refund Policy</a>
-        {% endif %}
-        {% if section.settings.contact_url != blank %}
-          <a href="{{ section.settings.contact_url }}" class="site-footer__link">Contact</a>
-        {% endif %}
-      {% endif %}
+      {% render 'footer-blocks-policy' %}
     </nav>
 
   </div>
@@ -74,19 +54,18 @@
 </footer>
 
 {% schema %}
-{
-  "name": "Landing Footer",
-  "settings": [
-    {
-      "type": "link_list",
-      "id": "legal_menu",
-      "label": "Right column menu"
-    },
-    {
-      "type": "url",
-      "id": "contact_url",
-      "label": "Contact page URL (optional)"
-    }
-  ]
-}
+  {
+    "name": "Landing Footer",
+    "settings": [
+      {
+        "type": "link_list",
+        "id": "legal_menu",
+        "label": "Right column menu"
+      }, {
+        "type": "url",
+        "id": "contact_url",
+        "label": "Contact page URL (optional)"
+      }
+    ]
+  }
 {% endschema %}
